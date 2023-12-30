@@ -1,3 +1,5 @@
+import { Suspense, lazy } from "react";
+
 import { DevtoolsProvider, DevtoolsPanel } from "@refinedev/devtools";
 import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
 import { KBarProvider } from "@refinedev/kbar";
@@ -23,7 +25,7 @@ import { useTranslation } from "react-i18next";
 
 import { resources } from "./resources";
 
-import { authProvider } from "./authProvider";
+// import { authProvider } from "./authProvider";
 import { DashboardPage } from "./pages/dashboard";
 // import { OrderList, OrderShow } from "./pages/orders";
 // import { UserList, UserShow } from "./pages/users";
@@ -55,7 +57,8 @@ import { SearchContextProvider } from "./contexts/SearchContextProvider";
 import { FavoritesContextProvider } from "./contexts/FavoritesContextProvider";
 
 import { Header, Title, OffLayoutArea } from "./components";
-import { useAutoLoginForDemo } from "./hooks";
+// import { useAutoLoginForDemo } from "./hooks";
+import { Spinner } from "./components/Spinner";
 import "./styles/main.css";
 
 export const API_URL = "https://api.finefoods.refine.dev";
@@ -64,7 +67,7 @@ export const API_URL = "https://api.finefoods.refine.dev";
 const App: React.FC = () => {
   // This hook is used to automatically login the user.
   // We use this hook to skip the login page and demonstrate the application more quickly.
-  const { loading } = useAutoLoginForDemo();
+  // const { loading } = useAutoLoginForDemo();
 
   const { t, i18n } = useTranslation();
   const i18nProvider = {
@@ -73,9 +76,9 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
-  if (loading) {
-    return null;
-  }
+  // if (loading) {
+  //   return <Spinner position="fixed" />;
+  // }
 
   return (
     <BrowserRouter>
@@ -89,7 +92,7 @@ const App: React.FC = () => {
                 routerProvider={routerProvider}
                 dataProvider={dataProvider_SWAPI}
                 // dataProvider={dataProvider("https://api.finefoods.refine.dev")}
-                authProvider={authProvider}
+                // authProvider={authProvider}
                 i18nProvider={i18nProvider}
                 options={{
                   syncWithLocation: true,
@@ -99,122 +102,38 @@ const App: React.FC = () => {
                 notificationProvider={notificationProvider}
                 resources={resources}
               >
-                <Routes>
-                  <Route
-                    element={
-                      <ThemedLayoutV2
-                        Header={Header}
-                        Title={Title}
-                        OffLayoutArea={OffLayoutArea}
-                      >
-                        <SearchContextProvider>
-                          <FavoritesContextProvider>
-                            <Outlet />
-                          </FavoritesContextProvider>
-                        </SearchContextProvider>
-                      </ThemedLayoutV2>
-                    }
-                  >
-                    <Route index element={<DashboardPage />} />
-
-                    {/* <Route path="/orders">
-                      <Route index element={<OrderList />} />
-                      <Route path="show/:id" element={<OrderShow />} />
-                    </Route> */}
-
-                    {/* <Route path="/users">
-                      <Route index element={<UserList />} />
-                      <Route path="show/:id" element={<UserShow />} />
-                    </Route> */}
-
-                    {/* <Route path="/products" element={<ProductList />} /> */}
-
-                    {/* <Route path="/stores">
-                      <Route index element={<StoreList />} />
-                      <Route path="create" element={<StoreCreate />} />
-                      <Route path="edit/:id" element={<StoreEdit />} />
-                    </Route> */}
-
-                    {/* <Route path="/categories" element={<CategoryList />} /> */}
-
-                    {/* <Route path="/couriers">
-                      <Route index element={<CourierList />} />
-                      <Route path="create" element={<CourierCreate />} />
-                      <Route path="edit/:id" element={<CourierEdit />} />
-                      <Route path="show/:id" element={<CourierShow />} />
-                    </Route> */}
-
-                    <Route path="/people">
-                      <Route index element={<PeopleList />} />
-                      <Route path="create" element={<PeopleCreate />} />
-                      <Route path="edit/:id" element={<PeopleEdit />} />
-                      <Route path="show/:id" element={<PeopleShow />} />
+                <Suspense fallback={<Spinner position="fixed" />}>
+                  <Routes>
+                    <Route
+                      element={
+                        <ThemedLayoutV2 Header={Header} Title={Title}>
+                          <SearchContextProvider>
+                            <FavoritesContextProvider>
+                              <Outlet />
+                            </FavoritesContextProvider>
+                          </SearchContextProvider>
+                        </ThemedLayoutV2>
+                      }
+                    >
+                      <Route index element={<DashboardPage />} />
+                      <Route path="/people">
+                        <Route index element={<PeopleList />} />
+                        <Route path="create" element={<PeopleCreate />} />
+                        <Route path="edit/:id" element={<PeopleEdit />} />
+                        <Route path="show/:id" element={<PeopleShow />} />
+                      </Route>
+                      <Route path="/favorites">
+                        <Route index element={<FavoritesList />} />
+                        {/* <Route path="create" element={<PeopleCreate />} /> */}
+                        {/* <Route path="edit/:id" element={<PeopleEdit />} /> */}
+                        {/* <Route path="show/:id" element={<PeopleShow />} /> */}
+                      </Route>
                     </Route>
 
-                    <Route path="/favorites">
-                      <Route index element={<FavoritesList />} />
-                      {/* <Route path="create" element={<PeopleCreate />} /> */}
-                      {/* <Route path="edit/:id" element={<PeopleEdit />} /> */}
-                      {/* <Route path="show/:id" element={<PeopleShow />} /> */}
-                    </Route>
-                  </Route>
+                    <Route path="*" element={<ErrorComponent />} />
+                  </Routes>
+                </Suspense>
 
-                  {/* <Route
-                    element={
-                      <Authenticated key="auth-pages" fallback={<Outlet />}>
-                        <NavigateToResource resource="dashboard" />
-                      </Authenticated>
-                    }
-                  >
-                    <Route
-                      path="/login"
-                      element={
-                        <AuthPage
-                          type="login"
-                          formProps={{
-                            defaultValues: {
-                              email: "demo@refine.dev",
-                              password: "demodemo",
-                            },
-                          }}
-                        />
-                      }
-                    />
-                    <Route
-                      path="/register"
-                      element={
-                        <AuthPage
-                          type="register"
-                          formProps={{
-                            defaultValues: {
-                              email: "demo@refine.dev",
-                              password: "demodemo",
-                            },
-                          }}
-                        />
-                      }
-                    />
-                    <Route
-                      path="/forgot-password"
-                      element={
-                        <AuthPage
-                          type="forgotPassword"
-                          formProps={{
-                            defaultValues: {
-                              email: "demo@refine.dev",
-                            },
-                          }}
-                        />
-                      }
-                    />
-                    <Route
-                      path="/update-password"
-                      element={<AuthPage type="updatePassword" />}
-                    />
-                  </Route> */}
-
-                  <Route path="*" element={<ErrorComponent />} />
-                </Routes>
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
               </Refine>

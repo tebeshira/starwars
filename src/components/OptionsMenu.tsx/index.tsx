@@ -16,11 +16,11 @@ import { IPeople } from "../../interfaces";
 
 const ITEM_HEIGHT = 48;
 
-type Props = { resourceOfItem: string; name: string; item: IPeople };
+type Props = { resourceOfItem: string; id: string; item: IPeople };
 
 type DinamicObjectOfResources = { [key: string]: IPeople[] };
 
-export function OptionsMenu({ resourceOfItem, name, item }: Props) {
+export function OptionsMenu({ resourceOfItem, id, item }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { resource } = useResource();

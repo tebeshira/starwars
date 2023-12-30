@@ -299,13 +299,13 @@ import { OptionsMenu } from "../../components/OptionsMenu.tsx";
 import { Search } from "../../components/Search";
 import { SearchContext } from "../../contexts/SearchContextProvider";
 import { FavoritesContext } from "../../contexts/FavoritesContextProvider";
+import { getItemIdFromUrlProp } from "../../helpers";
 
 export const PeopleList: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
-  const { edit } = useNavigation();
+  const { edit, show } = useNavigation();
   const { state, dispatch } = useContext(SearchContext);
   // const { favorites, dispatchFavorites } = useContext(FavoritesContext);
-
   const { tableQueryResult, current, setCurrent, pageCount } = useTable<
     IPeople,
     HttpError
@@ -338,7 +338,7 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
 
   const rows = people.map((row) => (
     <TableRow
-      key={row.name}
+      key={row.url}
       sx={{
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
@@ -347,31 +347,54 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
       <TableCell
         component="th"
         scope="row"
-        onClick={() => edit("people", row.name)}
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
       >
         {row.name}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.gender}
       </TableCell>
 
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.height}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.mass}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.hair_color}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.skin_color}
       </TableCell>
       <TableCell align="right">
-        <OptionsMenu resourceOfItem={"people"} name={row.name} item={row} />
+        <OptionsMenu
+          resourceOfItem={"people"}
+          id={getItemIdFromUrlProp(row.url)}
+          item={row}
+        />
       </TableCell>
     </TableRow>
   ));
+
+  if (people[0]) {
+    console.log(getItemIdFromUrlProp(people[0].url));
+  }
 
   return (
     <List>
@@ -401,12 +424,20 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Gender</TableCell>
-                <TableCell align="right">Height&nbsp;(cm)</TableCell>
-                <TableCell align="right">Mass&nbsp;(kg)</TableCell>
-                <TableCell align="right">Hair</TableCell>
-                <TableCell align="right">Skin</TableCell>
+                <TableCell>{t("people.fields.name")}</TableCell>
+                <TableCell align="right">{t("people.fields.gender")}</TableCell>
+                <TableCell align="right">
+                  {t("people.fields.height")}&nbsp;(cm)
+                </TableCell>
+                <TableCell align="right">
+                  {t("people.fields.mass")}&nbsp;(kg)
+                </TableCell>
+                <TableCell align="right">
+                  {t("people.fields.hair_color")}
+                </TableCell>
+                <TableCell align="right">
+                  {t("people.fields.skin_color")}
+                </TableCell>
                 <TableCell align="right">Options</TableCell>
               </TableRow>
             </TableHead>

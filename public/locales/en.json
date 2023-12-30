@@ -8,6 +8,12 @@
       "hair_color": "Hair",
       "skin_color": "Skin",
       "homeworld": "Planet",
+      "eye_color": "Eye color",
+      "birth_year": "Birth year",
+      "films": "Films",
+      "species": "Species",
+      "vehicles": "Vehicles",
+      "starships": "Starships",
       "images": {
         "label": "Images",
         "description": "Person picture",

@@ -5,6 +5,7 @@ export interface IPeople {
   hair_color: string;
   skin_color: string;
   birth_year: string;
+  eye_color: string;
   gender: string;
   homeworld: string;
   films: string[];
