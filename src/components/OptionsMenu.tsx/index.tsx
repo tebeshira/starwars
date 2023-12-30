@@ -16,7 +16,7 @@ import { IPeople } from "../../interfaces";
 
 const ITEM_HEIGHT = 48;
 
-type Props = { resourceOfItem: string; id: string; item: IPeople };
+type Props = { resourceOfItem: string; id: number; item: IPeople };
 
 type DinamicObjectOfResources = { [key: string]: IPeople[] };
 
@@ -130,10 +130,10 @@ export function OptionsMenu({ resourceOfItem, id, item }: Props) {
           </MenuItem>
         ))} */}
 
-        <MenuItem onClick={() => show(resourceOfItem, name)}>
+        <MenuItem onClick={() => show(resourceOfItem, id)}>
           <VisibilityIcon style={{ margin: "0 10px 0 0" }} /> Show
         </MenuItem>
-        <MenuItem onClick={() => edit(resourceOfItem, name)}>
+        <MenuItem onClick={() => edit(resourceOfItem, id)}>
           <Edit style={{ margin: "0 10px 0 0" }} color="success" /> Edit
         </MenuItem>
         {resource?.name !== "favorites" ? (
@@ -141,7 +141,7 @@ export function OptionsMenu({ resourceOfItem, id, item }: Props) {
             onClick={() => {
               mutateDelete({
                 resource: resourceOfItem,
-                id: name,
+                id,
                 mutationMode: "undoable",
               });
             }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HttpError,
   IResourceComponentsProps,
@@ -35,23 +35,34 @@ import {
   getItemResourceFromUrlProp,
 } from "../../helpers";
 import { Spinner } from "../../components/Spinner";
-import { Link } from "react-router-dom";
+import { CreateLink } from "../../components/CreateLink";
 
 export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
-
+  const [ids, setIds] = useState<string[] | number[]>([]);
   const { queryResult } = useShow<IPeople>();
-  const person = queryResult.data?.data;
+
   const Link = useLink();
+
+  const person = queryResult.data?.data;
+
+  // const itemsForLinks = data?.data;
+
+  // console.log(itemsForLinks);
+
+  // useEffect(() => {
+  //   if (person && person.films.length) {
+  //     setIds(getItemIdsFromUrls(person.films));
+  //   }
+  // }, [person]);
+
+  // if (person) {
+  //   console.log(getItemIdsFromUrls(person.films));
+  // }
 
   // const { data, isLoading, isError } = useOne<IPeople, HttpError>({
   //   resource: "people",
   //   id,
-  // });
-
-  // const { data, isLoading, isError } = useMany<IPeople, HttpError>({
-  //   resource: "products",
-  //   ids,
   // });
 
   console.log(queryResult);
@@ -78,13 +89,6 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
   //     );
   //   });
   // }
-
-  const idsFromUrls = (urls: string[]) => {
-    return urls.map((url) => getItemIdFromUrlProp(url));
-  };
-  if (person) {
-    console.log(idsFromUrls(person?.films as string[]));
-  }
 
   return (
     <Show>
@@ -289,6 +293,10 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                       </Typography>
                       <Typography sx={{ fontSize: "14px", color: "#757575" }}>
                         {/* {createLinks(person?.films as [])} */}
+                        {/* <CreateLinks urls={person?.films}/> */}
+                        {(person?.films as []).map((filmUrl) => (
+                          <CreateLink key={filmUrl} url={filmUrl} />
+                        ))}
                       </Typography>
                     </Stack>
                     <Stack>
