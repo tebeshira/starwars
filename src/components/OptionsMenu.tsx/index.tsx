@@ -3,41 +3,32 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import Clear from "@mui/icons-material/Clear";
-import Add from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Favorite from "@mui/icons-material/Favorite";
-import { useDelete, useNavigation, useResource } from "@refinedev/core";
+import {
+  useDelete,
+  useNavigation,
+  useResource,
+  useTranslate,
+} from "@refinedev/core";
 import Edit from "@mui/icons-material/Edit";
-import { spawn } from "child_process";
 import { FavoritesContext } from "../../contexts/FavoritesContextProvider";
-import { IPeople } from "../../interfaces";
 
 const ITEM_HEIGHT = 48;
 
-type Props = { resourceOfItem: string; id: number; item: IPeople };
-
-type DinamicObjectOfResources = { [key: string]: IPeople[] };
+type Props = {
+  resourceOfItem: string;
+  id: number;
+  item: any;
+};
 
 export function OptionsMenu({ resourceOfItem, id, item }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { resource } = useResource();
+  const t = useTranslate();
 
-  const [removeText, setRemoveText] = useState("");
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (resource) {
-      if (resource.name === "favorites") {
-        setRemoveText("Remove");
-      } else {
-        setRemoveText("Add to favorites");
-      }
-    }
-  }, []);
-  // console.log(resource);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -50,52 +41,19 @@ export function OptionsMenu({ resourceOfItem, id, item }: Props) {
 
   const { favorites, dispatchFavorites } = useContext(FavoritesContext);
 
-  //   const options = [
-  //     {
-  //       icon: <VisibilityIcon style={{ margin: "0 10px 0 0" }} />,
-  //       text: "Show",
-  //     },
-  //     {
-  //       icon: <Edit color="error" style={{ margin: "0 10px 0 0" }} />,
-  //       text: "Edit",
-  //     },
-
-  //     {
-  //       icon: <Clear color="success" style={{ margin: "0 10px 0 0" }} />,
-  //       text: "Delete",
-  //     },
-  //     {
-  //       icon: <Favorite color="error" style={{ margin: "0 10px 0 0" }} />,
-  //       text: "Add to Favorites",
-  //     },
-  //   ];
-
   const handleClickAdd = () => {
-    dispatchFavorites({ type: "ADD_FAVORITE_PEOPLE", payload: item });
+    dispatchFavorites({
+      type: "ADD_FAVORITE_ITEM",
+      payload: { resource: resourceOfItem, item },
+    });
     handleClose();
   };
 
-  console.log(item);
+  const handleAddClick = () => {
+    handleClickAdd();
 
-  const handleAddOrRemoveClick = () => {
-    if (resource) {
-      if (resource.name !== "favorites") {
-        handleClickAdd();
-      } else {
-        setCount((prev) => prev + 1);
-
-        dispatchFavorites({
-          type: "REMOVE_FAVORITE_ITEM",
-          payload: { resource: resourceOfItem, item },
-        });
-        handleClose();
-      }
-    }
+    handleClose();
   };
-
-  useEffect(() => {
-    console.log("count: ", count);
-  }, [count]);
 
   return (
     <div>
@@ -124,40 +82,38 @@ export function OptionsMenu({ resourceOfItem, id, item }: Props) {
           },
         }}
       >
-        {/* {options.map((option, i) => (
-          <MenuItem key={i} onClick={handleClose}>
-            {option.icon} {option.text}
-          </MenuItem>
-        ))} */}
-
         <MenuItem onClick={() => show(resourceOfItem, id)}>
-          <VisibilityIcon style={{ margin: "0 10px 0 0" }} /> Show
+          <VisibilityIcon style={{ margin: "0 10px 0 0" }} />{" "}
+          {t("options.show")}
         </MenuItem>
         <MenuItem onClick={() => edit(resourceOfItem, id)}>
-          <Edit style={{ margin: "0 10px 0 0" }} color="success" /> Edit
+          <Edit style={{ margin: "0 10px 0 0" }} color="success" />{" "}
+          {t("options.edit")}
         </MenuItem>
         {resource?.name !== "favorites" ? (
-          <MenuItem
-            onClick={() => {
-              mutateDelete({
-                resource: resourceOfItem,
-                id,
-                mutationMode: "undoable",
-              });
-            }}
-          >
-            <Clear style={{ margin: "0 10px 0 0" }} color="error" />
-            Delete
-          </MenuItem>
+          <div>
+            <MenuItem
+              onClick={() => {
+                mutateDelete({
+                  resource: resourceOfItem,
+                  id,
+                  mutationMode: "undoable",
+                });
+              }}
+            >
+              <Clear style={{ margin: "0 10px 0 0" }} color="error" />
+              {t("options.delete")}
+            </MenuItem>
+            <div onClick={handleAddClick}>
+              <MenuItem>
+                <Favorite style={{ margin: "0 10px 0 0" }} color="error" />
+                {t("options.addFavorites")}
+              </MenuItem>
+            </div>
+          </div>
         ) : (
           ""
         )}
-        <div onClick={handleAddOrRemoveClick}>
-          <MenuItem>
-            <Favorite style={{ margin: "0 10px 0 0" }} color="error" />
-            {removeText}
-          </MenuItem>
-        </div>
       </Menu>
     </div>
   );

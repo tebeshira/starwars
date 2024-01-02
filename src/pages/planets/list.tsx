@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import {
   IResourceComponentsProps,
+  useDelete,
   useNavigation,
   useTranslate,
   useTable,
@@ -11,7 +12,7 @@ import {
 import { List } from "@refinedev/mui";
 import Typography from "@mui/material/Typography";
 
-import { IPeople } from "../../interfaces";
+import { IPlanet } from "../../interfaces";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,14 +31,14 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export const PeopleList: React.FC<IResourceComponentsProps> = () => {
+export const PlanetsList: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
   const { edit, show } = useNavigation();
   const { searchState, dispatch } = useContext(SearchContext);
   const { resource } = useResource();
 
   const { tableQueryResult, current, setCurrent, pageCount } = useTable<
-    IPeople,
+    IPlanet,
     HttpError
   >({
     sorters: {
@@ -60,13 +61,13 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
   }
 
   // Fetches the people for the current page
-  const people = tableQueryResult?.data?.data ?? [];
+  const planets = tableQueryResult?.data?.data ?? [];
   // Checks if there is a next page available
   const hasNext = current < pageCount;
   // Checks if there is a previous page available
   const hasPrev = current > 1;
 
-  const rows = people.map((row) => (
+  const rows = planets.map((row) => (
     <TableRow
       key={row.url}
       sx={{
@@ -76,44 +77,44 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
     >
       <TableCell
         scope="row"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
         {row.name}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.gender}
+        {row.population}
       </TableCell>
 
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.height}
+        {row.climate}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.mass}
+        {row.gravity}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.hair_color}
+        {row.terrain}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.skin_color}
+        {row.rotation_period}
       </TableCell>
       <TableCell align="left">
         <OptionsMenu
-          resourceOfItem={"people"}
+          resourceOfItem={"planets"}
           id={getItemIdFromUrlProp(row.url)}
           item={row}
         />
@@ -123,7 +124,7 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <List
-      title={<Typography variant="h5">{t("people.titles.list")}</Typography>}
+      title={<Typography variant="h5">{t("planets.titles.list")}</Typography>}
     >
       <Search setCurentPage={setCurrentPageOnSearch} />
 
@@ -155,17 +156,25 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
               }}
             >
               <TableRow>
-                <TableCell>{t("people.fields.name")}</TableCell>
-                <TableCell align="left">{t("people.fields.gender")}</TableCell>
-                <TableCell align="left">{t("people.fields.height")}</TableCell>
-                <TableCell align="left">{t("people.fields.mass")}</TableCell>
+                <TableCell>{t("planets.fields.name")}</TableCell>
                 <TableCell align="left">
-                  {t("people.fields.hair_color")}
+                  {t("planets.fields.population")}
                 </TableCell>
                 <TableCell align="left">
-                  {t("people.fields.skin_color")}
+                  {t("planets.fields.climate")}
                 </TableCell>
-                <TableCell align="left">{t("people.fields.options")}</TableCell>
+                <TableCell align="left">
+                  {t("planets.fields.gravity")}
+                </TableCell>
+                <TableCell align="left">
+                  {t("planets.fields.terrain")}
+                </TableCell>
+                <TableCell align="left">
+                  {t("planets.fields.rotation_period")}
+                </TableCell>
+                <TableCell align="left">
+                  {t("planets.fields.options")}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{rows}</TableBody>

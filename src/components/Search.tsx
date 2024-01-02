@@ -3,10 +3,8 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import React, { useState, useContext, useEffect } from "react";
-import { HttpError, useTranslate } from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
+import { useTranslate, useResource } from "@refinedev/core";
 import { SearchContext } from "../contexts/SearchContextProvider";
-import { IPeople } from "../interfaces";
 
 type Props = {
   setCurentPage: (value: number, searchedValue: string) => void;
@@ -15,13 +13,15 @@ type Props = {
 export function Search({ setCurentPage }: Props) {
   const [searchValue, setSearchValue] = useState("");
 
-  const { state } = useContext(SearchContext);
+  const { searchState } = useContext(SearchContext);
+  const { resource } = useResource();
 
   const t = useTranslate();
 
   useEffect(() => {
-    if (state.searchPeople) {
-      setSearchValue(state.searchPeople);
+    // sets last searched values for the resorce )
+    if (resource && searchState[resource.name]) {
+      setSearchValue(searchState[resource.name]);
     }
   }, []);
 
@@ -31,6 +31,8 @@ export function Search({ setCurentPage }: Props) {
 
   function handleSearchSubmit(event: React.FormEvent) {
     event.preventDefault();
+    // 1 ensures that every new search will give the results for the 1 page (see getList() in dataprovider_SWAPI)
+    // searchValue ensures search value persistance in the same resource
     setCurentPage(1, searchValue);
   }
 

@@ -19,9 +19,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Step from "@mui/material/Step";
-import Stepper from "@mui/material/Stepper";
-import StepButton from "@mui/material/StepButton";
+
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -117,7 +115,7 @@ export const PeopleCreate: React.FC<IResourceComponentsProps> = () => {
             {t("people.fields.images.description")}
           </Typography>
           <Typography sx={{ fontSize: "12px" }}>
-            {t("couriers.fields.images.validation")}
+            {t("people.fields.images.validation")}
           </Typography>
         </Stack>
       </Grid>
@@ -135,7 +133,7 @@ export const PeopleCreate: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("couriers.fields.name")}
+                  {t("people.fields.name")}
                 </FormLabel>
                 <TextField
                   {...register("name", {
@@ -194,6 +192,7 @@ export const PeopleCreate: React.FC<IResourceComponentsProps> = () => {
     <Create
       isLoading={formLoading}
       footerButtons={<SaveButton onClick={handleSubmit(onFinish)} />}
+      title={<Typography variant="h5">{t("people.titles.create")}</Typography>}
     >
       <Box
         component="form"

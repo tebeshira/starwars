@@ -17,6 +17,36 @@ export interface IPeople {
   url: string;
 }
 
+export interface IFilm {
+  title: string;
+  episode_id: string;
+  opening_crawl: string;
+  director: string;
+  producer: string;
+  characters: string[];
+  release_date: string;
+  planets: string[];
+  species: string[];
+  vehicles: string[];
+  starships: string[];
+  url: string;
+}
+
+export interface IPlanet {
+  name: string;
+  rotation_period: string;
+  orbital_period: string;
+  diameter: string;
+  climate: string;
+  gravity: string;
+  terrain: string;
+  surface_water: string;
+  population: string;
+  residents: string[];
+  films: string[];
+  url: string;
+}
+
 export interface IOrderChart {
   count: number;
   status:

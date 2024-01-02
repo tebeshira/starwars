@@ -1,3 +1,7 @@
+th {
+  color: gray !important;
+}
+
 .overlay {
   left: 0;
   top: 0;
@@ -33,10 +37,48 @@
   border-style: solid;
 }
 
-.inlineLink {
+.pagination {
+  display: flex;
+  padding: 10px 0;
+  float: right;
+  align-items: flex-end;
+}
+
+.pagination button {
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  color: lightgray;
+}
+
+.pagination button:disabled {
+  color: gray;
+  cursor: initial;
+}
+.pagination span {
+  display: inline-block;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.itemLink {
+  position: relative;
+  align-items: center;
+  min-width: 50px;
   margin-right: 10px;
   text-decoration: underline;
   color: darkgreen;
+}
+
+.itemLink:hover {
+  color: #67be23;
+}
+
+.tableHeading {
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 15px;
 }
 
 @keyframes spin {

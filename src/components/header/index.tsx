@@ -27,7 +27,7 @@ import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
 
 import i18n from "../../i18n";
-import { IOrder, IStore, ICourier, IIdentity, IPeople } from "../../interfaces";
+import { IPeople } from "../../interfaces";
 import { ColorModeContext } from "../../contexts";
 
 interface IOptions {
@@ -39,7 +39,6 @@ interface IOptions {
 
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
   const [value, setValue] = useState("");
-  const [options, setOptions] = useState<IOptions[]>([]);
 
   const [people, setPeople] = useState<IPeople[]>([]);
 
@@ -48,114 +47,10 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
   const changeLanguage = useSetLocale();
   const locale = useGetLocale();
   const currentLocale = locale();
-  const { data: user } = useGetIdentity<IIdentity | null>();
 
   const t = useTranslate();
 
-  // const { refetch: refetchOrders } = useList<IOrder>({
-  //   resource: "orders",
-  //   config: {
-  //     filters: [{ field: "q", operator: "contains", value }],
-  //   },
-  //   queryOptions: {
-  //     enabled: false,
-  //     onSuccess: (data) => {
-  //       const orderOptionGroup = data.data.map((item) => {
-  //         return {
-  //           label: `${item.store.title} / #${item.orderNumber}`,
-  //           url: "/images/default-order-img.png",
-  //           link: `/orders/show/${item.id}`,
-  //           category: t("orders.orders"),
-  //         };
-  //       });
-  //       if (orderOptionGroup.length > 0) {
-  //         setOptions((prevOptions) => [...prevOptions, ...orderOptionGroup]);
-  //       }
-  //     },
-  //   },
-  // });
-
-  // const { refetch: refetchStores } = useList<IStore>({
-  //   resource: "stores",
-  //   config: {
-  //     filters: [{ field: "q", operator: "contains", value }],
-  //   },
-  //   queryOptions: {
-  //     enabled: false,
-  //     onSuccess: (data) => {
-  //       const storeOptionGroup = data.data.map((item) => {
-  //         return {
-  //           label: item.title,
-  //           url: "images/default-store-img.png",
-  //           link: `/stores/edit/${item.id}`,
-  //           category: t("stores.stores"),
-  //         };
-  //       });
-  //       setOptions((prevOptions) => [...prevOptions, ...storeOptionGroup]);
-  //     },
-  //   },
-  // });
-
-  // const { refetch: refetchCouriers } = useList<ICourier>({
-  //   resource: "couriers",
-  //   config: {
-  //     filters: [{ field: "q", operator: "contains", value }],
-  //   },
-  //   queryOptions: {
-  //     enabled: false,
-  //     onSuccess: (data) => {
-  //       const courierOptionGroup = data.data.map((item) => {
-  //         return {
-  //           label: `${item.name} ${item.surname}`,
-  //           url: item.avatar[0].url,
-  //           link: `/couriers/edit/${item.id}`,
-  //           category: t("couriers.couriers"),
-  //         };
-  //       });
-  //       setOptions((prevOptions) => [...prevOptions, ...courierOptionGroup]);
-  //     },
-  //   },
-  // });
-
-  //   const { refetch: refetchPeople } = useList<IPeople>({
-  //     resource: "people",
-  //     config: {
-  //       filters: [{ field: "q", operator: "contains", value }],
-  //     },
-  //     queryOptions: {
-  //       enabled: false,
-  //       onSuccess: (data) => {
-  //         const peopleOptionGroup = data.data.map((item) => {
-  //           return {
-  //             name: item.name,
-  //             height: item.height,
-  //             mass: item.mass,
-  //             hair_color: item.hair_color,
-  //             skin_color: item.skin_color,
-  //             birth_year: item.birth_year,
-  //             gender: item.birth_year,
-  //             homeworld: item.homeworld,
-  //             films: item.films,
-  //             species: item.species,
-  //             vehicles: item.vehicles,
-  //             starships: item.starships,
-  //             created: item.created,
-  //             edited: item.edited,
-  //             url: item.url,
-  //           };
-  //         });
-  //         // setPeople((prevPeople) => [...prevPeople, ...peopleOptionGroup]);
-  //       },
-  //     },
-  //   });
-
-  useEffect(() => {
-    // setOptions([]);
-    // refetchOrders();
-    // refetchCouriers();
-    // refetchStores();
-    // refetchPeople();
-  }, [value]);
+  console.log(currentLocale);
 
   return (
     <AppBar color="default" position="sticky" elevation={1}>
@@ -175,101 +70,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Stack direction="row" flex={1}>
-            <Autocomplete
-              sx={{
-                maxWidth: 550,
-              }}
-              id="search-autocomplete"
-              options={options}
-              filterOptions={(x) => x}
-              disableClearable
-              freeSolo
-              fullWidth
-              size="small"
-              onInputChange={(event, value) => {
-                if (event?.type === "change") {
-                  setValue(value);
-                }
-              }}
-              groupBy={(option) => option.category}
-              renderOption={(props, option: IOptions) => {
-                return (
-                  <Link href={option.link} underline="none">
-                    <Box
-                      {...props}
-                      component="li"
-                      sx={{
-                        display: "flex",
-                        padding: "10px",
-                        alignItems: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <Avatar
-                        sx={{
-                          width: {
-                            sm: "48px",
-                            md: "54px",
-                            lg: "64px",
-                          },
-                          height: {
-                            sm: "48px",
-                            md: "54px",
-                            lg: "64px",
-                          },
-                        }}
-                        src={option.url}
-                      />
-                      <Typography
-                        sx={{
-                          fontSize: {
-                            md: "14px",
-                            lg: "16px",
-                          },
-                        }}
-                      >
-                        {option.label}
-                      </Typography>
-                    </Box>
-                  </Link>
-                );
-              }}
-              renderInput={(params) => {
-                return (
-                  <Box
-                    position="relative"
-                    sx={{
-                      display: {
-                        xs: "none",
-                        sm: "block",
-                      },
-                    }}
-                  >
-                    <TextField
-                      {...params}
-                      label={t("search.placeholder")}
-                      InputProps={{
-                        ...params.InputProps,
-                      }}
-                    />
-                    <IconButton
-                      sx={{
-                        position: "absolute",
-                        right: 0,
-                        top: 0,
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                        },
-                      }}
-                    >
-                      <SearchOutlined />
-                    </IconButton>
-                  </Box>
-                );
-              }}
-            />
-          </Stack>
+          <Stack direction="row" flex={1}></Stack>
           <Stack direction="row" alignItems="center">
             <IconButton
               onClick={() => {
@@ -308,7 +109,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
                         }}
                         src={`/images/flags/${lang}.svg`}
                       />
-                      {lang === "en" ? "English" : "German"}
+                      {lang === "en" ? "English" : "Български"}
                     </Stack>
                   </MenuItem>
                 ))}
@@ -320,8 +121,8 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography variant="subtitle2">{user?.name}</Typography>
-              <Avatar src={user?.avatar} alt={user?.name} />
+              <Typography variant="subtitle2">Teodor Georgiev</Typography>
+              <Avatar src="#" alt="Teodor Georgiev" />
             </Stack>
           </Stack>
         </Stack>

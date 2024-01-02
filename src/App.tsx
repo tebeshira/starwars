@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 
 import { DevtoolsProvider, DevtoolsPanel } from "@refinedev/devtools";
-import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import { KBarProvider } from "@refinedev/kbar";
 import {
   ErrorComponent,
@@ -15,8 +15,6 @@ import dataProvider from "@refinedev/simple-rest";
 import { dataProvider_SWAPI } from "../dataProvider_SWAPI";
 
 import routerProvider, {
-  CatchAllNavigate,
-  NavigateToResource,
   UnsavedChangesNotifier,
   DocumentTitleHandler,
 } from "@refinedev/react-router-v6";
@@ -25,11 +23,8 @@ import { useTranslation } from "react-i18next";
 
 import { resources } from "./resources";
 
-// import { authProvider } from "./authProvider";
 import { DashboardPage } from "./pages/dashboard";
-// import { OrderList, OrderShow } from "./pages/orders";
-// import { UserList, UserShow } from "./pages/users";
-// import { ReviewsList } from "./pages/reviews";
+
 import {
   PeopleList,
   PeopleShow,
@@ -37,21 +32,14 @@ import {
   PeopleEdit,
 } from "./pages/people";
 import {
-  FavoritesList,
-  // PeopleShow,
-  // PeopleCreate,
-  // PeopleEdit,
-} from "./pages/favorites";
-import {
-  CourierList,
-  CourierShow,
-  CourierCreate,
-  CourierEdit,
-} from "./pages/couriers";
-// import { AuthPage } from "./pages/auth";
-// import { StoreList, StoreEdit, StoreCreate } from "./pages/stores";
-// import { ProductList } from "./pages/products";
-// import { CategoryList } from "./pages/categories";
+  PlanetsList,
+  PlanetsShow,
+  PlanetsCreate,
+  PlanetsEdit,
+} from "./pages/planets";
+import { FavoritesList } from "./pages/favorites";
+import { FilmsList, FilmsShow, FilmsCreate, FilmsEdit } from "./pages/films";
+
 import { ColorModeContextProvider } from "./contexts";
 import { SearchContextProvider } from "./contexts/SearchContextProvider";
 import { FavoritesContextProvider } from "./contexts/FavoritesContextProvider";
@@ -124,9 +112,18 @@ const App: React.FC = () => {
                       </Route>
                       <Route path="/favorites">
                         <Route index element={<FavoritesList />} />
-                        {/* <Route path="create" element={<PeopleCreate />} /> */}
-                        {/* <Route path="edit/:id" element={<PeopleEdit />} /> */}
-                        {/* <Route path="show/:id" element={<PeopleShow />} /> */}
+                      </Route>
+                      <Route path="/films">
+                        <Route index element={<FilmsList />} />
+                        <Route path="create" element={<FilmsCreate />} />
+                        <Route path="edit/:id" element={<FilmsEdit />} />
+                        <Route path="show/:id" element={<FilmsShow />} />
+                      </Route>
+                      <Route path="/planets">
+                        <Route index element={<PlanetsList />} />
+                        <Route path="create" element={<PlanetsCreate />} />
+                        <Route path="edit/:id" element={<PlanetsEdit />} />
+                        <Route path="show/:id" element={<PlanetsShow />} />
                       </Route>
                     </Route>
 

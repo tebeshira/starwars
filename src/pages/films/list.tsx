@@ -9,9 +9,7 @@ import {
   useResource,
 } from "@refinedev/core";
 import { List } from "@refinedev/mui";
-import Typography from "@mui/material/Typography";
-
-import { IPeople } from "../../interfaces";
+import { IFilm } from "../../interfaces";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -23,21 +21,21 @@ import Paper from "@mui/material/Paper";
 import { OptionsMenu } from "../../components/OptionsMenu.tsx";
 import { Search } from "../../components/Search";
 import { SearchContext } from "../../contexts/SearchContextProvider";
-
 import { getItemIdFromUrlProp } from "../../helpers";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Typography from "@mui/material/Typography";
 
-export const PeopleList: React.FC<IResourceComponentsProps> = () => {
+export const FilmsList: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
   const { edit, show } = useNavigation();
   const { searchState, dispatch } = useContext(SearchContext);
   const { resource } = useResource();
 
   const { tableQueryResult, current, setCurrent, pageCount } = useTable<
-    IPeople,
+    IFilm,
     HttpError
   >({
     sorters: {
@@ -58,15 +56,14 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
     setCurrent(value);
     dispatch({ type: `SEARCH_${resource?.name}`, payload: searchedValue });
   }
-
   // Fetches the people for the current page
-  const people = tableQueryResult?.data?.data ?? [];
+  const films = tableQueryResult?.data?.data ?? [];
   // Checks if there is a next page available
   const hasNext = current < pageCount;
   // Checks if there is a previous page available
   const hasPrev = current > 1;
 
-  const rows = people.map((row) => (
+  const rows = films.map((row) => (
     <TableRow
       key={row.url}
       sx={{
@@ -76,44 +73,39 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
     >
       <TableCell
         scope="row"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
       >
-        {row.name}
+        {row.title}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
       >
-        {row.gender}
+        {new Date(row.release_date).toDateString()}
       </TableCell>
 
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
       >
-        {row.height}
+        {row.director}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
       >
-        {row.mass}
+        {row.producer}
       </TableCell>
       <TableCell
         align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
       >
-        {row.hair_color}
+        {row.episode_id}
       </TableCell>
-      <TableCell
-        align="left"
-        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
-      >
-        {row.skin_color}
-      </TableCell>
+
       <TableCell align="left">
         <OptionsMenu
-          resourceOfItem={"people"}
+          resourceOfItem={"films"}
           id={getItemIdFromUrlProp(row.url)}
           item={row}
         />
@@ -123,7 +115,7 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <List
-      title={<Typography variant="h5">{t("people.titles.list")}</Typography>}
+      title={<Typography variant="h5">{t("films.titles.list")}</Typography>}
     >
       <Search setCurentPage={setCurrentPageOnSearch} />
 
@@ -155,17 +147,18 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
               }}
             >
               <TableRow>
-                <TableCell>{t("people.fields.name")}</TableCell>
-                <TableCell align="left">{t("people.fields.gender")}</TableCell>
-                <TableCell align="left">{t("people.fields.height")}</TableCell>
-                <TableCell align="left">{t("people.fields.mass")}</TableCell>
+                <TableCell>{t("films.fields.title")}</TableCell>
                 <TableCell align="left">
-                  {t("people.fields.hair_color")}
+                  {t("films.fields.release_date")}
                 </TableCell>
+                <TableCell align="left">{t("films.fields.director")}</TableCell>
+                <TableCell align="left">{t("films.fields.producer")}</TableCell>
+
                 <TableCell align="left">
-                  {t("people.fields.skin_color")}
+                  {t("films.fields.episode_id")}
                 </TableCell>
-                <TableCell align="left">{t("people.fields.options")}</TableCell>
+
+                <TableCell align="left">{t("films.fields.options")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{rows}</TableBody>

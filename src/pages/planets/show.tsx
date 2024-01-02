@@ -14,22 +14,21 @@ import Stack from "@mui/material/Stack";
 
 import Typography from "@mui/material/Typography";
 
-import { IPeople } from "../../interfaces";
+import { IPlanet } from "../../interfaces";
 
 import { Spinner } from "../../components/Spinner";
 import { CreateLink } from "../../components/CreateLink";
 
-export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
+export const PlanetsShow: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
-  const [ids, setIds] = useState<string[] | number[]>([]);
-  const { queryResult } = useShow<IPeople>();
+  const { queryResult } = useShow<IPlanet>();
 
   const Link = useLink();
 
-  const person = queryResult.data?.data;
+  const planet = queryResult.data?.data;
 
   return (
-    <Show title={<Typography variant="h5">{person?.name}</Typography>}>
+    <Show title={<Typography variant="h5">{planet?.name}</Typography>}>
       {queryResult.isLoading ? (
         <Spinner position="absolute" />
       ) : (
@@ -72,7 +71,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {t("people.fields.images.description")}
+                  {t("planets.fields.images.description")}
                 </Typography>
                 {/* <Typography sx={{ fontSize: "12px" }}>
                 {t("couriers.fields.images.validation")}
@@ -99,7 +98,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.name")}
+                        {t("planets.fields.name")}
                       </Typography>
 
                       <Typography
@@ -110,7 +109,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.name}
+                        {planet?.name}
                       </Typography>
                     </Stack>
 
@@ -121,7 +120,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.height")}
+                        {t("planets.fields.population")}
                       </Typography>
                       <Typography
                         sx={{
@@ -131,7 +130,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.height}
+                        {planet?.population}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -141,7 +140,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.mass")}
+                        {t("planets.fields.climate")}
                       </Typography>
                       <Typography
                         sx={{
@@ -151,7 +150,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.mass}
+                        {planet?.climate}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -161,7 +160,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.hair_color")}
+                        {t("planets.fields.gravity")}
                       </Typography>
                       <Typography
                         sx={{
@@ -171,7 +170,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.hair_color}
+                        {planet?.gravity}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -181,7 +180,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.skin_color")}
+                        {t("planets.fields.terrain")}
                       </Typography>
                       <Typography
                         sx={{
@@ -191,7 +190,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.skin_color}
+                        {planet?.terrain}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -208,7 +207,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.eye_color")}
+                        {t("planets.fields.rotation_period")}
                       </Typography>
                       <Typography
                         sx={{
@@ -218,7 +217,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.eye_color}
+                        {planet?.rotation_period}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -228,7 +227,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.birth_year")}
+                        {t("planets.fields.orbital_period")}
                       </Typography>
                       <Typography
                         sx={{
@@ -238,7 +237,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.birth_year}
+                        {planet?.orbital_period}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -248,7 +247,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.gender")}
+                        {t("planets.fields.diameter")}
                       </Typography>
                       <Typography
                         sx={{
@@ -258,7 +257,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.gender}
+                        {planet?.diameter}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -268,9 +267,8 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.homeworld")}
+                        {t("planets.fields.surface_water")}
                       </Typography>
-
                       <Typography
                         sx={{
                           fontSize: "14px",
@@ -279,10 +277,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        <CreateLink
-                          key={person?.homeworld}
-                          url={person?.homeworld as string}
-                        />
+                        {planet?.surface_water}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -292,7 +287,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.films")}
+                        {t("planets.fields.films")}
                       </Typography>
                       <Typography
                         sx={{
@@ -302,8 +297,8 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.films.length
-                          ? (person?.films as []).map((filmUrl) => (
+                        {planet?.films.length
+                          ? (planet?.films as []).map((filmUrl) => (
                               <CreateLink key={filmUrl} url={filmUrl} />
                             ))
                           : 0}
@@ -323,7 +318,7 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {t("people.fields.species")}
+                        {t("planets.fields.residents")}
                       </Typography>
 
                       <Typography
@@ -334,56 +329,8 @@ export const PeopleShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {person?.species.length
-                          ? (person?.species as []).map((filmUrl) => (
-                              <CreateLink key={filmUrl} url={filmUrl} />
-                            ))
-                          : 0}
-                      </Typography>
-                    </Stack>
-                    <Stack>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {t("people.fields.vehicles")}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          color: "#757575",
-                          display: "flex",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        {person?.vehicles.length
-                          ? (person?.vehicles as []).map((filmUrl) => (
-                              <CreateLink key={filmUrl} url={filmUrl} />
-                            ))
-                          : 0}
-                      </Typography>
-                    </Stack>
-                    <Stack>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {t("people.fields.starships")}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          color: "#757575",
-                          display: "flex",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        {person?.starships.length
-                          ? (person?.starships as []).map((filmUrl) => (
+                        {planet?.residents.length
+                          ? (planet?.residents as []).map((filmUrl) => (
                               <CreateLink key={filmUrl} url={filmUrl} />
                             ))
                           : 0}

@@ -6,102 +6,100 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import { IPeople, IUser } from "../interfaces";
+import { IPeople, IFilm, IPlanet } from "../interfaces";
+import { AnyAaaaRecord } from "dns";
 
 interface IFavoritesContext {
   favorites: InitialState;
   dispatchFavorites: Dispatch<Action>;
 }
 
-// type DinamicObjectOfResourcesArrays =
-//   {[key: string]: IPeople[] }
-
-type DinamicObject = { [key: string]: IPeople[] };
-
-type ActionAdd = {
+type Action = {
   type: string;
-  payload: IPeople;
-};
-
-type ActionGetAll = {
-  type: string;
-  payload?: IPeople[];
-};
-
-type ActionRemove = {
-  type: string;
-  payload: {
+  payload?: {
     resource: string;
-    item: { name: string };
+    item: any;
   };
 };
 
-type Action = ActionAdd | ActionGetAll | ActionRemove;
-
-type InitialState = DinamicObject;
-
-const initialState = { people: [] };
+type InitialState = { [key: string]: any[] };
 
 export const FavoritesContext = createContext<IFavoritesContext>(
   {} as IFavoritesContext
 );
 
-// localStorage.setItem("favorites", JSON.stringify(favorites));
-
-// JSON.parse(localStorage.getItem("favorites") || "[]");
-
+// the componentt is managing and cahing the favorites state from the localstorage
+// as there is no data base to ensure persistence of the favorite items
 export const FavoritesContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
+  const storage = JSON.parse(localStorage.getItem("favorites") as any);
+
+  let favoritesStorage: InitialState = storage || {
+    people: [],
+    films: [],
+    planets: [],
+  };
   const reducer = (state: InitialState, action: Action) => {
-    // localStorage.removeItem("favorites");
-    const favorites: InitialState =
-      JSON.parse(localStorage.getItem("favorites") as string) || initialState;
-
     switch (action.type) {
-      // SEARCH_... actions guarantee the persistence of the searched field and items while navigating to other pages ( show, edit, create etc.)
-
-      case "ADD_FAVORITE_PEOPLE":
-        // const filtered = favorites.people.filter((person) => word.length > 6);
-        const personToAdd = (action as ActionAdd).payload;
-        if (
-          !favorites.people.some((person) => person.name === personToAdd.name)
-        ) {
-          favorites.people.push(personToAdd);
+      case "ADD_FAVORITE_ITEM":
+        if (action.payload) {
+          const resource = action.payload.resource;
+          //  favoritesStorage[resource] ensures the manipulation of the right resource
+          //  in localstorage favorites object (people, films, planets etc.)
+          if (
+            !favoritesStorage[resource]?.some(
+              (item) => item.url === action.payload?.item.url
+            )
+          ) {
+            favoritesStorage[resource].push(action.payload.item);
+          }
+          localStorage.setItem("favorites", JSON.stringify(favoritesStorage));
+          return { ...state, [resource]: favoritesStorage[resource] };
         }
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        return { ...state, people: favorites.people };
 
       case "GET_ALL_FAVORITES":
-        return { ...state, people: favorites.people };
+        if (favoritesStorage) {
+          return { ...state, ...favoritesStorage };
+        }
 
-      case "REMOVE_FAVORITE_ITEM":
-        const resource = (action as ActionRemove).payload.resource;
-        const item = (action as ActionRemove).payload.item;
-        const itemToRemoveName = item.name;
-        // const index = favorites[resource]?.findIndex(
-        //   (item) => item.name === itemToRemoveName
-        // );
+      case "REMOVE_ALL_FAVORITES":
+        localStorage.removeItem("favorites");
+        favoritesStorage = { people: [], films: [], planets: [] };
+        return { ...state, ...favoritesStorage };
 
-        console.log(favorites[resource]);
+      // case "REMOVE_FAVORITE_ITEM":
+      //   if (action.payload) {
+      //     const resource = action.payload.resource;
 
-        const newFavorites = favorites[resource].filter(
-          (item) => item.name !== itemToRemoveName
-        );
+      //     if (favoritesStorage[resource]) {
+      //       console.log(action.payload);
+      //       const itemToRemove = action.payload.item;
 
-        localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      //       const index = favoritesStorage[resource].findIndex(
+      //         (item) => item.url === itemToRemove.url
+      //       );
 
-        return {
-          ...state,
-          [resource]: newFavorites,
-        };
+      //       const newStorage = favoritesStorage[resource].toSpliced(index, 1);
+
+      //       localStorage.setItem("favorites", JSON.stringify(newStorage));
+      //       return {
+      //         ...state,
+      //         ...favoritesStorage,
+      //       };
+      //     }
+      //   }
 
       default:
         return state;
     }
   };
 
-  const [favorites, dispatchFavorites] = useReducer(reducer, initialState);
+  const [favorites, dispatchFavorites] = useReducer(reducer, {
+    people: [],
+    films: [],
+    planets: [],
+  });
 
   const value = { favorites, dispatchFavorites };
 

@@ -7,7 +7,7 @@ import {
   useApiUrl,
   HttpError,
 } from "@refinedev/core";
-import { Edit, SaveButton, useAutocomplete } from "@refinedev/mui";
+import { Create, SaveButton, useAutocomplete } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 
@@ -26,9 +26,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Input from "@mui/material/Input";
 import type { TextFieldProps } from "@mui/material/TextField";
 
-import { IPeople, IFile, IStore, Nullable } from "../../interfaces";
+import { IPlanet, Nullable } from "../../interfaces";
 
-export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
+export const PlanetsCreate: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
 
   const apiUrl = useApiUrl();
@@ -41,7 +41,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IPeople, HttpError, Nullable<IPeople>>({
+  } = useForm<IPlanet, HttpError, Nullable<IPlanet>>({
     warnWhenUnsavedChanges: true,
   });
 
@@ -68,8 +68,6 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
       }
     );
   };
-
-  console.log(useForm());
 
   const renderForm = () => (
     <Grid
@@ -105,7 +103,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                 },
               }}
               src="#"
-              alt="Person Picture"
+              alt="Planet Picture"
             />
           </label>
           <Typography
@@ -114,10 +112,10 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
               fontWeight: "bold",
             }}
           >
-            {t("people.fields.images.description")}
+            {t("planets.fields.images.description")}
           </Typography>
           <Typography sx={{ fontSize: "12px" }}>
-            {t("people.fields.images.validation")}
+            {t("planets.fields.images.validation")}
           </Typography>
         </Stack>
       </Grid>
@@ -135,7 +133,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.name")}
+                  {t("planets.fields.name")}
                 </FormLabel>
                 <TextField
                   {...register("name", {
@@ -165,21 +163,21 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.homeworld")}
+                  {t("planets.fields.population")}
                 </FormLabel>
                 <TextField
-                  {...register("homeworld", {
+                  {...register("population", {
                     required: t("errors.required.field", {
-                      field: "Planet",
+                      field: "Population",
                     }),
                   })}
                   size="small"
                   margin="none"
                   variant="outlined"
                 />
-                {errors.homeworld && (
+                {errors.population && (
                   <FormHelperText error>
-                    {errors.homeworld.message}
+                    {errors.population.message}
                   </FormHelperText>
                 )}
               </FormControl>
@@ -191,10 +189,10 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
   );
 
   return (
-    <Edit
-      title={<Typography variant="h5">{t("people.titles.edit")}</Typography>}
+    <Create
       isLoading={formLoading}
       footerButtons={<SaveButton onClick={handleSubmit(onFinish)} />}
+      title={<Typography variant="h5">{t("planets.titles.create")}</Typography>}
     >
       <Box
         component="form"
@@ -206,6 +204,6 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
       >
         {renderForm()}
       </Box>
-    </Edit>
+    </Create>
   );
 };

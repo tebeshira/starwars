@@ -7,7 +7,7 @@ import {
   useApiUrl,
   HttpError,
 } from "@refinedev/core";
-import { Edit, SaveButton, useAutocomplete } from "@refinedev/mui";
+import { Create, SaveButton, useAutocomplete } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 
@@ -19,16 +19,15 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Autocomplete from "@mui/material/Autocomplete";
 import Input from "@mui/material/Input";
 import type { TextFieldProps } from "@mui/material/TextField";
 
-import { IPeople, IFile, IStore, Nullable } from "../../interfaces";
+import { IFilm, Nullable } from "../../interfaces";
 
-export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
+export const FilmsCreate: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
 
   const apiUrl = useApiUrl();
@@ -41,7 +40,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IPeople, HttpError, Nullable<IPeople>>({
+  } = useForm<IFilm, HttpError, Nullable<IFilm>>({
     warnWhenUnsavedChanges: true,
   });
 
@@ -68,8 +67,6 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
       }
     );
   };
-
-  console.log(useForm());
 
   const renderForm = () => (
     <Grid
@@ -114,10 +111,10 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
               fontWeight: "bold",
             }}
           >
-            {t("people.fields.images.description")}
+            {t("films.fields.images.description")}
           </Typography>
           <Typography sx={{ fontSize: "12px" }}>
-            {t("people.fields.images.validation")}
+            {t("films.fields.images.validation")}
           </Typography>
         </Stack>
       </Grid>
@@ -135,20 +132,20 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.name")}
+                  {t("films.fields.title")}
                 </FormLabel>
                 <TextField
-                  {...register("name", {
+                  {...register("title", {
                     required: t("errors.required.field", {
-                      field: "Name",
+                      field: "Title",
                     }),
                   })}
                   size="small"
                   margin="none"
                   variant="outlined"
                 />
-                {errors.name && (
-                  <FormHelperText error>{errors.name.message}</FormHelperText>
+                {errors.title && (
+                  <FormHelperText error>{errors.title.message}</FormHelperText>
                 )}
               </FormControl>
             </Stack>
@@ -165,21 +162,21 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.homeworld")}
+                  {t("films.fields.producer")}
                 </FormLabel>
                 <TextField
-                  {...register("homeworld", {
+                  {...register("producer", {
                     required: t("errors.required.field", {
-                      field: "Planet",
+                      field: "Producer",
                     }),
                   })}
                   size="small"
                   margin="none"
                   variant="outlined"
                 />
-                {errors.homeworld && (
+                {errors.producer && (
                   <FormHelperText error>
-                    {errors.homeworld.message}
+                    {errors.producer.message}
                   </FormHelperText>
                 )}
               </FormControl>
@@ -191,8 +188,8 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
   );
 
   return (
-    <Edit
-      title={<Typography variant="h5">{t("people.titles.edit")}</Typography>}
+    <Create
+      title={<Typography variant="h5">{t("films.titles.create")}</Typography>}
       isLoading={formLoading}
       footerButtons={<SaveButton onClick={handleSubmit(onFinish)} />}
     >
@@ -206,6 +203,6 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
       >
         {renderForm()}
       </Box>
-    </Edit>
+    </Create>
   );
 };

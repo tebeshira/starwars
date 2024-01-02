@@ -14,6 +14,7 @@
       "species": "Species",
       "vehicles": "Vehicles",
       "starships": "Starships",
+      "options": "Options",
       "images": {
         "label": "Images",
         "description": "Person picture",
@@ -25,6 +26,69 @@
       "create": "Create Person",
       "edit": "Edit Person"
     }
+  },
+
+  "films": {
+    "fields": {
+      "title": "Title",
+      "episode_id": "Episode ID",
+      "opening_crawl": "Opening crawl",
+      "director": "Director",
+      "producer": "Producer",
+      "characters": "Characters",
+      "release_date": "Release date",
+      "planets": "Planets",
+      "species": "Species",
+      "vehicles": "Vehicles",
+      "starships": "Starships",
+      "options": "Options",
+      "images": {
+        "label": "Images",
+        "description": "Film picture",
+        "validation": "must be 480x480 px"
+      }
+    },
+    "titles": {
+      "list": "Films",
+      "create": "Create Film",
+      "edit": "Edit Film"
+    }
+  },
+
+  "planets": {
+    "fields": {
+      "name": "Name",
+      "rotation_period": "Rotation period",
+      "orbital_period": "Orbital period",
+      "diameter": "Diameter",
+      "climate": "Climate",
+      "gravity": "Gravity",
+      "terrain": "Terrain",
+      "surface_water": "Surface water",
+      "population": "Population",
+      "films": "Films",
+      "residents": "Residents",
+
+      "options": "Options",
+      "images": {
+        "label": "Images",
+        "description": "Planet picture",
+        "validation": "must be 480x480 px"
+      }
+    },
+    "titles": {
+      "list": "Planets",
+      "create": "Create Planet",
+      "edit": "Edit Planet"
+    }
+  },
+
+  "options": {
+    "show": "Show",
+    "edit": "Edit",
+    "create": "Create",
+    "delete": "Delete",
+    "addFavorites": "Add to favorites"
   },
   "errors": {
     "required": {

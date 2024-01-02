@@ -1,292 +1,16 @@
-// import React, { useState, useContext, useEffect } from "react";
-// import { SearchContext } from "../../contexts/SearchContext";
-
-// import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
-// import { FormControlLabel, Checkbox, Button, ButtonGroup } from "@mui/material";
-// import {
-//   IResourceComponentsProps,
-//   useDelete,
-//   useNavigation,
-//   useTranslate,
-//   useList,
-//   HttpError,
-// } from "@refinedev/core";
-// import { useLocation } from "react-router-dom";
-// import { List, useDataGrid } from "@refinedev/mui";
-// import Avatar from "@mui/material/Avatar";
-// import Stack from "@mui/material/Stack";
-// import Tooltip from "@mui/material/Tooltip";
-// import Typography from "@mui/material/Typography";
-
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import Close from "@mui/icons-material/Close";
-// import Edit from "@mui/icons-material/Edit";
-
-// import { IPeople } from "../../interfaces";
-// import { Search } from "../../components/Search";
-
-// export const PeopleList: React.FC<IResourceComponentsProps> = () => {
-//   const [isRegisteredNewSearch, setIsRegisteredNewSearch] =
-//     useState<boolean>(false);
-
-//   const { show, edit } = useNavigation();
-//   const t = useTranslate();
-//   const { mutate: mutateDelete } = useDelete();
-
-//   const { state, dispatch } = useContext(SearchContext);
-
-//   let location = useLocation();
-
-//   // console.log(location);
-
-//   // interface Row {
-//   //   count: number;
-//   //   next: string | null;
-//   //   previous: string | null;
-//   //   results: IPeople[];
-//   // }
-
-//   // {
-//   //   initialPageSize: 10,
-//   //    initialSorter: [
-//   //      {
-//   //        field: "name",
-//   //        order: "asc",
-//   //      },
-//   //    ],
-//   //  }
-
-//   // const { refetch: fetchSearchedPeople } = useList<IPeople, HttpError>({
-//   //   resource: "people",
-//   //   queryOptions: { enabled: searchValue ? true : false },
-//   //   meta: {
-//   //     searchValue,
-//   //   },
-//   // });
-
-//   const { dataGridProps } = useDataGrid<GridColDef<IPeople>[]>({
-//     initialPageSize: 10,
-//     initialSorter: [
-//       {
-//         field: "name",
-//         order: "asc",
-//       },
-//     ],
-//     meta: {
-//       searchValue: state.searchPeople,
-//       isRegisteredNewSearch,
-//     },
-//     // syncWithLocation: true,
-//   });
-
-//   // useEffect(() => {
-//   //   return () => {
-//   //     dispatch({ type: "SEARCH_PEOPLE", payload: "" });
-//   //   };
-//   // }, []);
-
-//   console.log(isRegisteredNewSearch);
-
-//   // useEffect(() => {
-//   //   setSearchValue(localStorage.getItem("searchValue") as string);
-//   // }, []);
-
-//   // useEffect(() => {
-//   //   if (searchValue) {
-//   //     fetchSearchedPeople();
-//   //   }
-//   // }, [searchValue]);
-
-//   function registrator(value: boolean) {
-//     setIsRegisteredNewSearch(value);
-//   }
-
-//   // console.log(dataGridProps);
-//   // console.log(searchValue);
-
-//   function getRowId(row: IPeople) {
-//     return row.name.trim();
-//   }
-
-//   const columns = React.useMemo<GridColDef<IPeople>[]>(
-//     () => [
-//       {
-//         field: "name",
-//         headerName: t("couriers.fields.name"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.name}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 300,
-//       },
-
-//       {
-//         field: "Gender",
-//         headerName: t("people.fields.gender"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.gender}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 200,
-//         sortable: false,
-//       },
-//       {
-//         field: "Height",
-//         headerName: t("people.fields.height"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.height}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 200,
-//         sortable: false,
-//       },
-//       {
-//         field: "Mass",
-//         headerName: t("people.fields.mass"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.mass}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 200,
-//         sortComparator: (v1, v2) => v1.mass.localeCompare(v2.mass),
-//         sortable: false,
-//       },
-//       {
-//         field: "Hair",
-//         headerName: t("people.fields.hair_color"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.hair_color}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 200,
-//         sortable: false,
-//       },
-//       {
-//         field: "Skin",
-//         headerName: t("people.fields.skin_color"),
-//         renderCell: function render({ row }) {
-//           return (
-//             <Stack alignItems="center" direction="row" spacing={2}>
-//               <Typography variant="body2">{row.skin_color}</Typography>
-//             </Stack>
-//           );
-//         },
-//         flex: 1,
-//         minWidth: 200,
-//         sortable: false,
-//       },
-//       {
-//         field: "actions",
-//         headerName: t("table.actions"),
-//         type: "actions",
-//         getActions: function render({ row }) {
-//           return [
-//             <GridActionsCellItem
-//               key={1}
-//               label={"Add to favorites"}
-//               icon={<FavoriteIcon color="error" />}
-//               onClick={(row) => {
-//                 console.log(row);
-//               }}
-//               showInMenu
-//             />,
-//             <GridActionsCellItem
-//               key={2}
-//               label={t("buttons.edit")}
-//               icon={<Edit color="success" />}
-//               onClick={() => edit("people", row.name)}
-//               showInMenu
-//             />,
-//             <GridActionsCellItem
-//               key={3}
-//               label={t("buttons.delete")}
-//               icon={<Close color="error" />}
-//               onClick={() => {
-//                 mutateDelete({
-//                   resource: "people",
-//                   id: row.name,
-//                   mutationMode: "undoable",
-//                 });
-//               }}
-//               showInMenu
-//             />,
-//           ];
-//         },
-//       },
-//     ],
-//     [t]
-//   );
-
-//   return (
-//     <List wrapperProps={{ sx: { paddingX: { xs: 2, md: 0 } } }}>
-//       <Search registerNewSearch={registrator} />
-//       <DataGrid
-//         getRowId={getRowId}
-//         {...dataGridProps}
-//         columns={columns}
-//         sortingMode="client"
-//         sortingOrder={["asc", "desc"]}
-//         disableColumnFilter
-//         disableColumnMenu
-//         autoHeight
-//         pageSizeOptions={[10]}
-//         density="comfortable"
-//         sx={{
-//           "& .MuiDataGrid-cell:hover": {
-//             cursor: "pointer",
-//           },
-//         }}
-//         onRowClick={(row) => {
-//           show("people", row.id);
-//         }}
-//       />
-//     </List>
-//   );
-// };
-
-import { useContext, useState, useEffect } from "react";
-
-import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { useContext, useEffect } from "react";
 
 import {
   IResourceComponentsProps,
-  useDelete,
   useNavigation,
   useTranslate,
-  useTable,
-  HttpError,
-  useModal,
 } from "@refinedev/core";
-import { List, useDataGrid } from "@refinedev/mui";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
+import { List, DeleteButton } from "@refinedev/mui";
+
+import { getItemIdFromUrlProp } from "../../helpers";
+
 import Typography from "@mui/material/Typography";
-
-import Close from "@mui/icons-material/Close";
-import Edit from "@mui/icons-material/Edit";
-
-import { IPeople } from "../../interfaces";
+import Button from "@mui/material/Button";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -300,14 +24,15 @@ import { FavoritesContext } from "../../contexts/FavoritesContextProvider";
 
 export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
-  const { edit } = useNavigation();
+  const { edit, show } = useNavigation();
   const { favorites, dispatchFavorites } = useContext(FavoritesContext);
 
   useEffect(() => {
     dispatchFavorites({ type: "GET_ALL_FAVORITES" });
   }, []);
 
-  const rows = favorites?.people?.map((row) => (
+  //  creates rows based on people array in favorites in localstorage
+  const rowsPeople = favorites?.people?.map((row) => (
     <TableRow
       key={row.name}
       sx={{
@@ -316,55 +41,322 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
       }}
     >
       <TableCell
-        component="th"
         scope="row"
-        onClick={() => edit("people", row.name)}
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
       >
         {row.name}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.gender}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.height}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.mass}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.hair_color}
       </TableCell>
-      <TableCell align="right" onClick={() => edit("people", row.name)}>
+      <TableCell
+        align="right"
+        onClick={() => show("people", getItemIdFromUrlProp(row.url))}
+      >
         {row.skin_color}
       </TableCell>
       <TableCell align="right">
-        <OptionsMenu resourceOfItem={"people"} name={row.name} item={row} />
+        <OptionsMenu
+          resourceOfItem={"people"}
+          id={getItemIdFromUrlProp(row.url)}
+          item={row}
+        />
+      </TableCell>
+    </TableRow>
+  ));
+
+  //  creates rows based on films array in favorites in localstorage
+  const rowsFilms = favorites?.films?.map((row) => (
+    <TableRow
+      key={row.name}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+        "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
+      }}
+    >
+      <TableCell
+        scope="row"
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
+      >
+        {row.title}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
+      >
+        {new Date(row.release_date).toDateString()}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
+      >
+        {row.director}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
+      >
+        {row.producer}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("films", getItemIdFromUrlProp(row.url))}
+      >
+        {row.episode_id}
+      </TableCell>
+
+      <TableCell align="right">
+        <OptionsMenu
+          resourceOfItem={"films"}
+          id={getItemIdFromUrlProp(row.url)}
+          item={row}
+        />
+      </TableCell>
+    </TableRow>
+  ));
+
+  //  creates rows based on films array in favorites in localstorage
+  const rowsPlanets = favorites?.planets?.map((row) => (
+    <TableRow
+      key={row.name}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+        "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
+      }}
+    >
+      <TableCell
+        scope="row"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.name}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.population}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.climate}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.gravity}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.terrain}
+      </TableCell>
+      <TableCell
+        align="right"
+        onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
+      >
+        {row.rotation_period}
+      </TableCell>
+
+      <TableCell align="right">
+        <OptionsMenu
+          resourceOfItem={"films"}
+          id={getItemIdFromUrlProp(row.url)}
+          item={row}
+        />
       </TableCell>
     </TableRow>
   ));
 
   return (
-    <List>
+    <List
+      title={
+        <Typography variant="h5">
+          Favorites{" "}
+          <Button
+            color="error"
+            variant="contained"
+            sx={{ float: "right" }}
+            onClick={() => dispatchFavorites({ type: "REMOVE_ALL_FAVORITES" })}
+          >
+            Delete All
+          </Button>
+        </Typography>
+      }
+    >
       <TableContainer
         component={Paper}
         sx={{ minWidth: 650, minHeight: 800, position: "relative" }}
       >
-        <>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Gender</TableCell>
-                <TableCell align="right">Height&nbsp;(cm)</TableCell>
-                <TableCell align="right">Mass&nbsp;(kg)</TableCell>
-                <TableCell align="right">Hair</TableCell>
-                <TableCell align="right">Skin</TableCell>
-                <TableCell align="right">Options</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{rows}</TableBody>
-          </Table>
-        </>
+        {!favorites.people.length && !favorites.films.length ? (
+          <div
+            style={{
+              position: "absolute",
+              top: "30%",
+              left: "50%",
+              marginLeft: "-77px",
+            }}
+          >
+            No favorites
+          </div>
+        ) : (
+          ""
+        )}
+        {favorites.people && favorites.people.length ? (
+          <>
+            <Typography
+              variant="h6"
+              sx={{
+                padding: "35px 15px 0 15px",
+                background: "rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              Favorite People
+            </Typography>
+            <Table
+              aria-label="simple table"
+              sx={{ marginBottom: "75px", boxShadow: "0 4px 2px -3px black" }}
+            >
+              <TableHead
+                sx={{
+                  background: "rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                <TableRow>
+                  <TableCell>{t("people.fields.name")}</TableCell>
+                  <TableCell align="right">
+                    {t("people.fields.gender")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("people.fields.height")}
+                  </TableCell>
+                  <TableCell align="right">{t("people.fields.mass")}</TableCell>
+                  <TableCell align="right">
+                    {t("people.fields.hair_color")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("people.fields.skin_color")}
+                  </TableCell>
+                  <TableCell align="right">Options</TableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>{rowsPeople}</TableBody>
+            </Table>
+          </>
+        ) : (
+          ""
+        )}
+        {favorites.films && favorites.films.length ? (
+          <>
+            <Typography
+              variant="h6"
+              sx={{
+                padding: "35px 15px 0 15px",
+                background: "rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              Favorite Films
+            </Typography>
+
+            <Table
+              aria-label="simple table"
+              sx={{ marginBottom: "75px", boxShadow: "0 4px 2px -3px black" }}
+            >
+              <TableHead sx={{ background: "rgba(0, 0, 0, 0.2)" }}>
+                <TableRow>
+                  <TableCell>{t("films.fields.title")}</TableCell>
+                  <TableCell align="right">
+                    {t("films.fields.release_date")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("films.fields.director")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("films.fields.producer")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("films.fields.episode_id")}
+                  </TableCell>
+                  <TableCell align="right">Options</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{rowsFilms}</TableBody>
+            </Table>
+          </>
+        ) : (
+          ""
+        )}
+
+        {favorites.planets && favorites.planets.length ? (
+          <>
+            <Typography
+              variant="h6"
+              sx={{
+                padding: "35px 15px 0 15px",
+                background: "rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              Favorite Planets
+            </Typography>
+
+            <Table
+              aria-label="simple table"
+              sx={{ marginBottom: "75px", boxShadow: "0 4px 2px -3px black" }}
+            >
+              <TableHead sx={{ background: "rgba(0, 0, 0, 0.2)" }}>
+                <TableRow>
+                  <TableCell>{t("planets.fields.name")}</TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.population")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.climate")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.gravity")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.terrain")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.rotation_period")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {t("planets.fields.options")}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{rowsPlanets}</TableBody>
+            </Table>
+          </>
+        ) : (
+          ""
+        )}
       </TableContainer>
     </List>
   );

@@ -19,7 +19,9 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-
+import Step from "@mui/material/Step";
+import Stepper from "@mui/material/Stepper";
+import StepButton from "@mui/material/StepButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -28,7 +30,7 @@ import type { TextFieldProps } from "@mui/material/TextField";
 
 import { IPeople, IFile, IStore, Nullable } from "../../interfaces";
 
-export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
+export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
 
   const apiUrl = useApiUrl();
@@ -117,7 +119,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
             {t("people.fields.images.description")}
           </Typography>
           <Typography sx={{ fontSize: "12px" }}>
-            {t("people.fields.images.validation")}
+            {t("couriers.fields.images.validation")}
           </Typography>
         </Stack>
       </Grid>
@@ -135,7 +137,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.name")}
+                  {t("couriers.fields.name")}
                 </FormLabel>
                 <TextField
                   {...register("name", {
@@ -192,7 +194,7 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Edit
-      title={<Typography variant="h5">{t("people.titles.edit")}</Typography>}
+      title={<Typography variant="h5">{t("films.titles.edit")}</Typography>}
       isLoading={formLoading}
       footerButtons={<SaveButton onClick={handleSubmit(onFinish)} />}
     >

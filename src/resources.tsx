@@ -39,4 +39,26 @@ export const resources = [
       icon: <Man2Icon />,
     },
   },
+  {
+    name: "films",
+    list: "/films",
+    create: "/films/create",
+    edit: "/films/edit/:id",
+    show: "/films/show/:id",
+    meta: {
+      label: "Films",
+      icon: <Man2Icon />,
+    },
+  },
+  {
+    name: "planets",
+    list: "/planets",
+    create: "/planets/create",
+    edit: "/planets/edit/:id",
+    show: "/planets/show/:id",
+    meta: {
+      label: "Planets",
+      icon: <Man2Icon />,
+    },
+  },
 ];
