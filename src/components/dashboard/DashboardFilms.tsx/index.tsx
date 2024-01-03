@@ -17,7 +17,6 @@ export const DashboardFilms: React.FC = () => {
   if (isLoading) {
     return <SmallSpinner dimension={"30px"} />;
   }
-  console.log(films);
 
   return (
     <Stack

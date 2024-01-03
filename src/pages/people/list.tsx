@@ -59,8 +59,6 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
     dispatch({ type: `SEARCH_${resource?.name}`, payload: searchedValue });
   }
 
-  console.log(tableQueryResult);
-
   // Fetches the people for the current page
   const people = tableQueryResult?.data?.data ?? [];
   // Checks if there is a next page available

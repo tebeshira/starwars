@@ -69,8 +69,6 @@ export const PeopleEdit: React.FC<IResourceComponentsProps> = () => {
     );
   };
 
-  console.log(useForm());
-
   const renderForm = () => (
     <Grid
       container

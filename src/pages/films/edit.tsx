@@ -28,7 +28,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Input from "@mui/material/Input";
 import type { TextFieldProps } from "@mui/material/TextField";
 
-import { IPeople, IFile, IStore, Nullable } from "../../interfaces";
+import { IFilm, Nullable } from "../../interfaces";
 
 export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
@@ -43,7 +43,7 @@ export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IPeople, HttpError, Nullable<IPeople>>({
+  } = useForm<IFilm, HttpError, Nullable<IFilm>>({
     warnWhenUnsavedChanges: true,
   });
 
@@ -70,8 +70,6 @@ export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
       }
     );
   };
-
-  console.log(useForm());
 
   const renderForm = () => (
     <Grid
@@ -116,10 +114,10 @@ export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
               fontWeight: "bold",
             }}
           >
-            {t("people.fields.images.description")}
+            {t("films.fields.images.description")}
           </Typography>
           <Typography sx={{ fontSize: "12px" }}>
-            {t("couriers.fields.images.validation")}
+            {t("films.fields.images.validation")}
           </Typography>
         </Stack>
       </Grid>
@@ -137,20 +135,20 @@ export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("couriers.fields.name")}
+                  {t("films.fields.title")}
                 </FormLabel>
                 <TextField
-                  {...register("name", {
+                  {...register("title", {
                     required: t("errors.required.field", {
-                      field: "Name",
+                      field: "Title",
                     }),
                   })}
                   size="small"
                   margin="none"
                   variant="outlined"
                 />
-                {errors.name && (
-                  <FormHelperText error>{errors.name.message}</FormHelperText>
+                {errors.title && (
+                  <FormHelperText error>{errors.title.message}</FormHelperText>
                 )}
               </FormControl>
             </Stack>
@@ -167,21 +165,21 @@ export const FilmsEdit: React.FC<IResourceComponentsProps> = () => {
                     color: "text.primary",
                   }}
                 >
-                  {t("people.fields.homeworld")}
+                  {t("films.fields.producer")}
                 </FormLabel>
                 <TextField
-                  {...register("homeworld", {
+                  {...register("producer", {
                     required: t("errors.required.field", {
-                      field: "Planet",
+                      field: "Producer",
                     }),
                   })}
                   size="small"
                   margin="none"
                   variant="outlined"
                 />
-                {errors.homeworld && (
+                {errors.producer && (
                   <FormHelperText error>
-                    {errors.homeworld.message}
+                    {errors.producer.message}
                   </FormHelperText>
                 )}
               </FormControl>

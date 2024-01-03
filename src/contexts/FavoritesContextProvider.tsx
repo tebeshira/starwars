@@ -105,8 +105,6 @@ export const FavoritesContextProvider: React.FC<PropsWithChildren> = ({
 
   const value = { favorites, dispatchFavorites };
 
-  console.log("FAVORITESContext is rendered");
-
   return (
     <FavoritesContext.Provider value={value}>
       {children}

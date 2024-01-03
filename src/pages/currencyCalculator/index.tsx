@@ -9,14 +9,6 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-// import InboxIcon from "@mui/material/InboxIcon";
-
-import ListItem from "@mui/material/ListItem";
-
-import ListItemIcon from "@mui/material/ListItemIcon";
-
-import ListItemText from "@mui/material/ListItemText";
-// import MonetizationOnIcon from "@mui/icons-material/MonetizationOnIcon";
 
 export const CurrencyCalculator: React.FC = () => {
   const t = useTranslate();
@@ -27,6 +19,7 @@ export const CurrencyCalculator: React.FC = () => {
     Wupiupi: 1.5,
     Peggats: 2.0,
   };
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedCurrency, setSelectedCurrency] = useState("Galactic Credits");
   const [exchangeRates, setExchangeRates] =
@@ -61,20 +54,38 @@ export const CurrencyCalculator: React.FC = () => {
         Wupiupi: prevRates["Wupiupi"] * (Math.random() * 0.2 + 0.9),
         Peggats: prevRates["Peggats"] * (Math.random() * 0.2 + 0.9),
       }));
-    }, 5000); // Update every 5 seconds
+    }, 1000); // Update every 5 seconds
 
     return () => clearInterval(intervalId);
   }, []);
 
+  // if (isLoading) return <SmallSpinner dimensions={"30px"} />;
+
   return (
     <List
+      wrapperProps={{
+        sx: {
+          maxWidth: "410px",
+          minHeight: "460px",
+          position: "relative",
+        },
+      }}
       title={<Typography variant="h5">Galactic Trade Calculator</Typography>}
     >
-      <InputLabel id="currency-calculator-select-label">
+      <InputLabel
+        id="currency-calculator-select-label"
+        sx={{
+          margin: "10px 0 0 0",
+        }}
+      >
         Select Currency:
       </InputLabel>
       <Select
-        sx={{ height: "40px", padding: "5px 5px" }}
+        sx={{
+          height: "40px",
+          padding: "5px 5px",
+          width: "100%",
+        }}
         labelId="currency-calculator-select-label"
         id="currency-calculator-select"
         value={selectedCurrency}
@@ -87,45 +98,27 @@ export const CurrencyCalculator: React.FC = () => {
           </MenuItem>
         ))}
       </Select>
-
-      {/* <div>
-        <label>Select Currency:</label>
-        <select
-          value={selectedCurrency}
-          onChange={(e) => handleSelectCurrency(e.target.value)}
-        >
-         
-        </select>
-      </div> */}
-      {/* <div>
-        <h2>Exchange Rates</h2>
-        <ul>
-          {Object.entries(exchangeRates).map(([currency, rate]) => (
-            <li key={currency}>
-              {currency}: {rate}
-            </li>
-          ))}
-        </ul>
-      </div> */}
-
-      <ul>
+      <Box sx={{ margin: "50px 0 0 0" }}>
+        <Typography sx={{ margin: "0 0 15px 0" }} variant="h6">
+          Exchange rates
+        </Typography>
         {Object.entries(exchangeRates).map(([currency, rate]) => (
-          <ListItem key={currency} disablePadding>
-            <ListItemIcon>
-              {/* <MonetizationOnIcon /> */}
-            </ListItemIcon>
-            <ListItemText>
-              {currency}: {rate}
-            </ListItemText>
-          </ListItem>
+          <Box key={rate} sx={{ margin: "0 0 5px 0" }}>
+            <Typography sx={{ color: "#67be23" }}>
+              <span style={{ fontWeight: "bold", color: "#fff" }}>
+                {currency} :{" "}
+              </span>
+              {rate}
+            </Typography>
+          </Box>
         ))}
-      </ul>
+      </Box>
 
-      <Box component="div" sx={{ padding: "25px 0" }}>
+      <Box component="div" sx={{ textAlign: "center", margin: "65px 0 0 0" }}>
         <Button
           variant="outlined"
           onClick={handleBuy}
-          sx={{ marginRight: "10px" }}
+          sx={{ marginRight: "25px" }}
         >
           Buy Currency
         </Button>
@@ -138,12 +131,5 @@ export const CurrencyCalculator: React.FC = () => {
         </Button>
       </Box>
     </List>
-    // <Grid container columns={24} spacing={2}>
-    //   <Grid item xs={24} sm={24} md={24} lg={12} xl={7}>
-    //     <Card sx={{ height: "230px", position: "relative" }}>
-    //       <DashboardPeople />
-    //     </Card>
-    //   </Grid>
-    // </Grid>
   );
 };

@@ -58,8 +58,6 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
-  console.log(i18nProvider);
-
   return (
     <BrowserRouter>
       <KBarProvider>

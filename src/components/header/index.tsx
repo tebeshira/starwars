@@ -50,8 +50,6 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
 
   const t = useTranslate();
 
-  console.log(currentLocale);
-
   return (
     <AppBar color="default" position="sticky" elevation={1}>
       <Toolbar
