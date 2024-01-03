@@ -26,13 +26,9 @@ export const CreateLink = ({ url }: Props) => {
   }, [url]);
 
   return (
-    <Link
-      className="itemLink"
-      to={`/${resource}/show/${id}`}
-      // style={{ position: "relative", alignItems: "center", minWidth: "50px" }}
-    >
+    <Link className="itemLink" to={`/${resource}/show/${id}`}>
       {status !== "success" ? (
-        <SmallSpinner />
+        <SmallSpinner dimension={"10px"} />
       ) : (
         <span
           style={{

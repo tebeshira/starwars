@@ -59,6 +59,8 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
     dispatch({ type: `SEARCH_${resource?.name}`, payload: searchedValue });
   }
 
+  console.log(tableQueryResult);
+
   // Fetches the people for the current page
   const people = tableQueryResult?.data?.data ?? [];
   // Checks if there is a next page available
@@ -132,7 +134,8 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
         sx={{ minWidth: 650, minHeight: 800, position: "relative" }}
       >
         <>
-          {tableQueryResult?.isLoading && (
+          {(tableQueryResult?.isLoading ||
+            tableQueryResult?.fetchStatus === "fetching") && (
             <div className="overlay">
               <div className="overlay__inner">
                 <div className="overlay__content">
@@ -141,13 +144,13 @@ export const PeopleList: React.FC<IResourceComponentsProps> = () => {
               </div>
             </div>
           )}
-          {tableQueryResult?.fetchStatus === "fetching" && (
+          {/* {tableQueryResult?.fetchStatus === "fetching" && (
             <div className="overlay">
               <div className="overlay__inner">
                 <div className="overlay__content"></div>
               </div>
             </div>
-          )}
+          )} */}
           <Table aria-label="simple table">
             <TableHead
               sx={{

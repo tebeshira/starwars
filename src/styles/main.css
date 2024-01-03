@@ -70,6 +70,7 @@ th {
   margin-right: 10px;
   text-decoration: underline;
   color: darkgreen;
+  min-height: 21px;
 }
 
 .itemLink:hover {

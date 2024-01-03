@@ -133,7 +133,8 @@ export const PlanetsList: React.FC<IResourceComponentsProps> = () => {
         sx={{ minWidth: 650, minHeight: 800, position: "relative" }}
       >
         <>
-          {tableQueryResult?.isLoading && (
+          {(tableQueryResult?.isLoading ||
+            tableQueryResult?.fetchStatus === "fetching") && (
             <div className="overlay">
               <div className="overlay__inner">
                 <div className="overlay__content">
@@ -142,13 +143,13 @@ export const PlanetsList: React.FC<IResourceComponentsProps> = () => {
               </div>
             </div>
           )}
-          {tableQueryResult?.fetchStatus === "fetching" && (
+          {/* {tableQueryResult?.fetchStatus === "fetching" && (
             <div className="overlay">
               <div className="overlay__inner">
                 <div className="overlay__content"></div>
               </div>
             </div>
-          )}
+          )} */}
           <Table aria-label="simple table">
             <TableHead
               sx={{

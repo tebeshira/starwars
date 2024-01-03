@@ -22,7 +22,9 @@ type Action = {
   };
 };
 
-type InitialState = { [key: string]: any[] };
+// type InitialState = { [key: string]: any[] };
+
+type InitialState = Record<string, any[]>;
 
 export const FavoritesContext = createContext<IFavoritesContext>(
   {} as IFavoritesContext

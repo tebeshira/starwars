@@ -25,22 +25,22 @@ export function Search({ setCurentPage }: Props) {
     }
   }, []);
 
-  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-  }
+  };
 
-  function handleSearchSubmit(event: React.FormEvent) {
+  const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // 1 ensures that every new search will give the results for the 1 page (see getList() in dataprovider_SWAPI)
     // searchValue ensures search value persistance in the same resource
     setCurentPage(1, searchValue);
-  }
+  };
 
   return (
     <form onSubmit={handleSearchSubmit}>
       <Box position="relative" paddingBottom={3}>
         <TextField
-          label="Search"
+          label={t("search.placeholder")}
           fullWidth
           onChange={handleSearchChange}
           value={searchValue || ""}

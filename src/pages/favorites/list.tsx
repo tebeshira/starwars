@@ -34,7 +34,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
   //  creates rows based on people array in favorites in localstorage
   const rowsPeople = favorites?.people?.map((row) => (
     <TableRow
-      key={row.name}
+      key={row.url}
       sx={{
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
@@ -89,7 +89,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
   //  creates rows based on films array in favorites in localstorage
   const rowsFilms = favorites?.films?.map((row) => (
     <TableRow
-      key={row.name}
+      key={row.url}
       sx={{
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
@@ -139,7 +139,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
   //  creates rows based on films array in favorites in localstorage
   const rowsPlanets = favorites?.planets?.map((row) => (
     <TableRow
-      key={row.name}
+      key={row.url}
       sx={{
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": { background: "rgba(0,0,0, 0.3)", cursor: "pointer" },
@@ -196,14 +196,14 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
     <List
       title={
         <Typography variant="h5">
-          Favorites{" "}
+          {t("people.fields.favorites")}
           <Button
             color="error"
             variant="contained"
             sx={{ float: "right" }}
             onClick={() => dispatchFavorites({ type: "REMOVE_ALL_FAVORITES" })}
           >
-            Delete All
+            {t("favorites.remove")}
           </Button>
         </Typography>
       }
@@ -235,7 +235,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >
-              Favorite People
+              {`${t("people.fields.favorites")} ${t("people.titles.list")}`}
             </Typography>
             <Table
               aria-label="simple table"
@@ -261,7 +261,9 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                   <TableCell align="right">
                     {t("people.fields.skin_color")}
                   </TableCell>
-                  <TableCell align="right">Options</TableCell>
+                  <TableCell align="right">
+                    {t("favorites.fields.options")}
+                  </TableCell>
                 </TableRow>
               </TableHead>
 
@@ -280,7 +282,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >
-              Favorite Films
+              {`${t("films.fields.favorites")} ${t("films.titles.list")}`}
             </Typography>
 
             <Table
@@ -302,7 +304,9 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                   <TableCell align="right">
                     {t("films.fields.episode_id")}
                   </TableCell>
-                  <TableCell align="right">Options</TableCell>
+                  <TableCell align="right">
+                    {t("favorites.fields.options")}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{rowsFilms}</TableBody>
@@ -321,7 +325,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >
-              Favorite Planets
+              {`${t("planets.fields.favorites")} ${t("planets.titles.list")}`}
             </Typography>
 
             <Table
@@ -347,7 +351,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
                     {t("planets.fields.rotation_period")}
                   </TableCell>
                   <TableCell align="right">
-                    {t("planets.fields.options")}
+                    {t("favorites.fields.options")}
                   </TableCell>
                 </TableRow>
               </TableHead>

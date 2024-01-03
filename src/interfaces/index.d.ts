@@ -15,6 +15,7 @@ export interface IPeople {
   created: string;
   edited: string;
   url: string;
+  total: number;
 }
 
 export interface IFilm {
@@ -30,6 +31,7 @@ export interface IFilm {
   vehicles: string[];
   starships: string[];
   url: string;
+  total: number;
 }
 
 export interface IPlanet {
@@ -45,6 +47,7 @@ export interface IPlanet {
   residents: string[];
   films: string[];
   url: string;
+  total: number;
 }
 
 export interface IOrderChart {
