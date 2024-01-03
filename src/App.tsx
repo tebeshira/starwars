@@ -22,11 +22,11 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Dashboard from "@mui/icons-material/Dashboard";
 import Man2Icon from "@mui/icons-material/Man2";
-
-import { resources } from "./resources";
-
+import VideocamIcon from "@mui/icons-material/Videocam";
+import PublicIcon from "@mui/icons-material/Public";
+import CalculateIcon from "@mui/icons-material/Calculate";
 import { DashboardPage } from "./pages/dashboard";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
   PeopleList,
   PeopleShow,
@@ -63,7 +63,18 @@ const App: React.FC = () => {
       <KBarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
-          <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
+          <GlobalStyles
+            styles={{
+              html: { WebkitFontSmoothing: "auto" },
+              body: {
+                backgroundImage: "url('./images/background.png')",
+                backgroundPosition: "center",
+                backgrounfRepeat: "no-repeat",
+                backgroundSize: "cover",
+                opacity: "0.95",
+              },
+            }}
+          />
           <RefineSnackbarProvider>
             <DevtoolsProvider>
               <Refine
@@ -105,7 +116,7 @@ const App: React.FC = () => {
                     // show: "/people/show/:id",
                     meta: {
                       label: t("favorites.titles.list"),
-                      icon: <Man2Icon />,
+                      icon: <FavoriteIcon />,
                     },
                   },
                   {
@@ -116,7 +127,7 @@ const App: React.FC = () => {
                     show: "/films/show/:id",
                     meta: {
                       label: t("films.titles.list"),
-                      icon: <Man2Icon />,
+                      icon: <VideocamIcon />,
                     },
                   },
                   {
@@ -127,7 +138,7 @@ const App: React.FC = () => {
                     show: "/planets/show/:id",
                     meta: {
                       label: t("planets.titles.list"),
-                      icon: <Man2Icon />,
+                      icon: <PublicIcon />,
                     },
                   },
                   {
@@ -135,7 +146,7 @@ const App: React.FC = () => {
                     list: "/currency-calculator",
                     meta: {
                       label: t("calculator.title"),
-                      icon: <Dashboard />,
+                      icon: <CalculateIcon />,
                     },
                   },
                 ]}
