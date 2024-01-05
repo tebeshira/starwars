@@ -25,7 +25,7 @@ import { OptionsMenu } from "../../components/OptionsMenu.tsx";
 import { Search } from "../../components/Search";
 import { SearchContext } from "../../contexts/SearchContextProvider";
 
-import { getItemIdFromUrlProp } from "../../helpers";
+import { getItemIdFromUrlProp, numberWithCommas } from "../../helpers";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -85,7 +85,7 @@ export const PlanetsList: React.FC<IResourceComponentsProps> = () => {
         align="left"
         onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.population}
+        {numberWithCommas(row.population)}
       </TableCell>
 
       <TableCell

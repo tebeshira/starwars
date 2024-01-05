@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import { useTranslate } from "@refinedev/core";
 
@@ -9,7 +8,6 @@ import {
   DashboardFilms,
   DashboardPlanets,
 } from "../../components/dashboard";
-import { Box } from "@mui/material";
 
 export const DashboardPage: React.FC = () => {
   const t = useTranslate();

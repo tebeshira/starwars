@@ -231,7 +231,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
             <Typography
               variant="h6"
               sx={{
-                padding: "35px 15px 0 15px",
+                padding: "10px 15px 0 15px",
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >
@@ -278,7 +278,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
             <Typography
               variant="h6"
               sx={{
-                padding: "35px 15px 0 15px",
+                padding: "10px 15px 0 15px",
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >
@@ -321,7 +321,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
             <Typography
               variant="h6"
               sx={{
-                padding: "35px 15px 0 15px",
+                padding: "10px 15px 0 15px",
                 background: "rgba(0, 0, 0, 0.2)",
               }}
             >

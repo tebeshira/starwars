@@ -6,8 +6,20 @@
   opacity: 0.6;
 } */
 
+/* body {
+  background-image: url("./images/background.png");
+  background-attachment: fixed;
+  background-size: 100% auto;
+  opacity: 0.95;
+  background-repeat: repeat-y;
+} */
+
 th {
   color: gray !important;
+}
+
+main {
+  min-height: 110vh;
 }
 
 .overlay {

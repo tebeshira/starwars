@@ -5,129 +5,228 @@ import Box from "@mui/material/Box";
 import { useTranslate } from "@refinedev/core";
 import Typography from "@mui/material/Typography";
 import { List } from "@refinedev/mui";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 export const CurrencyCalculator: React.FC = () => {
   const t = useTranslate();
 
-  const currencies = ["Galactic Credits", "Wupiupi", "Peggats"];
-  const initialExchangeRates = {
-    "Galactic Credits": 1.0,
+  const initialData: Record<string, number> = {
+    "Galactic Credits": 1,
     Wupiupi: 1.5,
-    Peggats: 2.0,
-  };
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [selectedCurrency, setSelectedCurrency] = useState("Galactic Credits");
-  const [exchangeRates, setExchangeRates] =
-    useState<Record<string, number>>(initialExchangeRates);
-
-  const handleSelectCurrency = (currency: string) => {
-    setSelectedCurrency(currency);
+    Peggats: 2,
   };
 
-  // Float multiplication in JS produces wrong result [duplicate] That's just how it works. In short, the number is stored in scientific notation using binary base.
-  // Therefore not all numbers can be accurately represented, and due to the choice of the base, tenths cannot be accurately represented.
-  const handleBuy = () => {
-    setExchangeRates((prevRates) => ({
-      ...prevRates,
-      [selectedCurrency]: prevRates[selectedCurrency] * 1.1,
-    }));
-  };
+  const min = 0;
+  const max = 1000;
 
-  const handleSell = () => {
-    setExchangeRates((prevRates) => ({
-      ...prevRates,
-      [selectedCurrency]: prevRates[selectedCurrency] * 0.9,
-    }));
-  };
+  const [exchangeRates, setExchangeRates] = useState(initialData);
+
+  const [selectedCurrencyToBuy, setSelectedCurrencyToBuy] = useState("");
+
+  const [selectedCurrencyToSell, setSelectedCurrencyToSell] = useState("");
+
+  const [ammountToBuy, setAmmountToBuy] = useState<number | string>("");
+
+  const [disabled, setDisabled] = useState(true);
+
+  const currencies = ["Galactic Credits", "Wupiupi", "Peggats"];
 
   useEffect(() => {
-    // Simulate dynamic changes in exchange rates over time (e.g., due to supply and demand)
-    const intervalId = setInterval(() => {
-      setExchangeRates((prevRates) => ({
-        "Galactic Credits":
-          prevRates["Galactic Credits"] * (Math.random() * 0.2 + 0.9),
-        Wupiupi: prevRates["Wupiupi"] * (Math.random() * 0.2 + 0.9),
-        Peggats: prevRates["Peggats"] * (Math.random() * 0.2 + 0.9),
-      }));
-    }, 1000); // Update every 5 seconds
+    if (
+      ammountToBuy &&
+      selectedCurrencyToBuy &&
+      selectedCurrencyToSell &&
+      selectedCurrencyToBuy !== selectedCurrencyToSell
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [ammountToBuy, selectedCurrencyToBuy, selectedCurrencyToSell]);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  const handleSelectCurrencyToBuy = (currency: string) => {
+    setSelectedCurrencyToBuy(currency);
+  };
 
-  // if (isLoading) return <SmallSpinner dimensions={"30px"} />;
+  const handleSelectCurrencyToSell = (currency: string) => {
+    setSelectedCurrencyToSell(currency);
+  };
+
+  const handleChangeAmmountToBuy = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value ? Math.round(parseFloat(e.target.value)) : "";
+
+    if ((value as number) > max) value = max;
+    if ((value as number) < min) value = min;
+    setAmmountToBuy(value);
+  };
+
+  const handleExchange = () => {
+    const ammountToSell =
+      (ammountToBuy as number) *
+      (exchangeRates[selectedCurrencyToBuy] /
+        exchangeRates[selectedCurrencyToSell]);
+    setExchangeRates((prevRates) => {
+      // console.log("prevRates:", prevRates);
+      const prevRatesCache = prevRates;
+
+      prevRatesCache[selectedCurrencyToBuy] =
+        prevRates[selectedCurrencyToBuy] + (ammountToBuy as number) * 0.01;
+
+      if (
+        prevRates[selectedCurrencyToSell] - ammountToSell * 0.01 <
+        initialData[selectedCurrencyToSell]
+      ) {
+        prevRatesCache[selectedCurrencyToSell] =
+          initialData[selectedCurrencyToSell];
+      } else {
+        prevRatesCache[selectedCurrencyToSell] =
+          prevRates[selectedCurrencyToSell] - ammountToSell * 0.01;
+      }
+      return {
+        ...prevRatesCache,
+      };
+    });
+
+    setAmmountToBuy("");
+  };
 
   return (
     <List
       wrapperProps={{
         sx: {
-          maxWidth: "410px",
+          // maxWidth: "410px",
           minHeight: "460px",
           position: "relative",
         },
       }}
-      title={<Typography variant="h5">Galactic Trade Calculator</Typography>}
-    >
-      <InputLabel
-        id="currency-calculator-select-label"
-        sx={{
-          margin: "10px 0 0 0",
-        }}
-      >
-        Select Currency:
-      </InputLabel>
-      <Select
-        sx={{
-          height: "40px",
-          padding: "5px 5px",
-          width: "100%",
-        }}
-        labelId="currency-calculator-select-label"
-        id="currency-calculator-select"
-        value={selectedCurrency}
-        label="Select Currency:"
-        onChange={(e) => handleSelectCurrency(e.target.value)}
-      >
-        {currencies.map((currency) => (
-          <MenuItem key={currency} value={currency}>
-            {currency}
-          </MenuItem>
-        ))}
-      </Select>
-      <Box sx={{ margin: "50px 0 0 0" }}>
-        <Typography sx={{ margin: "0 0 15px 0" }} variant="h6">
-          Exchange rates
-        </Typography>
-        {Object.entries(exchangeRates).map(([currency, rate]) => (
-          <Box key={rate} sx={{ margin: "0 0 5px 0" }}>
-            <Typography sx={{ color: "#67be23" }}>
-              <span style={{ fontWeight: "bold", color: "#fff" }}>
-                {currency} :{" "}
-              </span>
-              {rate}
-            </Typography>
+      title={
+        <Typography variant="h5">
+          Galactic Trade Calculator
+          <Box
+            sx={{
+              right: "15px",
+              top: "15px",
+              background: "rgba(0,0,0,0.3)",
+              padding: "15px",
+              marginTop: "35px",
+              borderRadius: "7px",
+            }}
+          >
+            <Box sx={{ margin: "0 0 5px 0" }}>
+              <Typography sx={{ color: "lightgray", marginBottom: "5px" }}>
+                Currencies' exchange rates cannot fall under the initial ones
+                determined by the Emperor
+              </Typography>
+              {Object.entries(exchangeRates).map(([currency, rate]) => (
+                <Typography key={currency} sx={{ color: "#67be23" }}>
+                  <span style={{ fontWeight: "bold", marginRight: "5px" }}>
+                    {currency} :{" "}
+                  </span>
+                  <span style={{ fontWeight: "bold", color: "gray" }}>
+                    {rate.toFixed(2)}
+                  </span>
+                </Typography>
+              ))}
+              <Typography sx={{ color: "#67be23" }}>
+                <span style={{ fontWeight: "bold", marginRight: "5px" }}>
+                  Exchange rate (buy/sell):{" "}
+                </span>
+                <span style={{ fontWeight: "bold", color: "gray" }}>
+                  {exchangeRates[selectedCurrencyToBuy] /
+                  exchangeRates[selectedCurrencyToSell]
+                    ? (
+                        exchangeRates[selectedCurrencyToBuy] /
+                        exchangeRates[selectedCurrencyToSell]
+                      ).toFixed(2)
+                    : "none"}
+                </span>
+              </Typography>
+            </Box>
           </Box>
-        ))}
-      </Box>
+        </Typography>
+      }
+    >
+      <Grid container>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5} lg={4}>
+            <TextField
+              sx={{ width: "100%", marginBottom: "25px" }}
+              select
+              value={selectedCurrencyToBuy}
+              label="Select Currency to buy:"
+              onChange={(e) => handleSelectCurrencyToBuy(e.target.value)}
+            >
+              {currencies.map((currency) => (
+                <MenuItem key={currency} value={currency}>
+                  {currency}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
 
-      <Box component="div" sx={{ textAlign: "center", margin: "65px 0 0 0" }}>
+          <Grid item xs={12} md={5} lg={4}>
+            <TextField
+              label="Ammount to buy (between 0 and 50)"
+              sx={{ width: "100%", marginBottom: "25px" }}
+              type="number"
+              inputProps={{ min, max }}
+              value={ammountToBuy}
+              onChange={handleChangeAmmountToBuy}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5} lg={4}>
+            <TextField
+              sx={{
+                width: "100%",
+              }}
+              value={selectedCurrencyToSell}
+              select
+              label="Select Currency to sell:"
+              onChange={(e) => handleSelectCurrencyToSell(e.target.value)}
+            >
+              {currencies.map((currency, i) => (
+                <MenuItem key={i} value={currency}>
+                  {currency}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid>
+            {ammountToBuy && selectedCurrencyToBuy && selectedCurrencyToSell ? (
+              selectedCurrencyToBuy !== selectedCurrencyToSell ? (
+                <Typography color="gray" sx={{ marginTop: "5px" }}>
+                  {`It will cost ${(
+                    (ammountToBuy as number) *
+                    (exchangeRates[selectedCurrencyToBuy] /
+                      exchangeRates[selectedCurrencyToSell])
+                  ).toFixed(2)} ${selectedCurrencyToSell}
+              `}{" "}
+                </Typography>
+              ) : (
+                <Typography color="error" sx={{ marginTop: "5px" }}>
+                  {"Please, choose different currencies!"}
+                </Typography>
+              )
+            ) : (
+              ""
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Box component="div" sx={{ margin: "35px 0 0 0" }}>
         <Button
+          disabled={disabled}
           variant="outlined"
-          onClick={handleBuy}
+          onClick={handleExchange}
           sx={{ marginRight: "25px" }}
         >
-          Buy Currency
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ color: "gray", borderColor: "gray" }}
-          onClick={handleSell}
-        >
-          Sell Currency
+          Exchange
         </Button>
       </Box>
     </List>

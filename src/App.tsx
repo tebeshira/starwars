@@ -1,5 +1,3 @@
-import { Suspense, lazy } from "react";
-
 import { DevtoolsProvider, DevtoolsPanel } from "@refinedev/devtools";
 import { Refine } from "@refinedev/core";
 import { KBarProvider } from "@refinedev/kbar";
@@ -11,7 +9,6 @@ import {
 } from "@refinedev/mui";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import CssBaseline from "@mui/material/CssBaseline";
-import dataProvider from "@refinedev/simple-rest";
 import { dataProvider_SWAPI } from "../dataProvider_SWAPI";
 
 import routerProvider, {
@@ -25,14 +22,15 @@ import Man2Icon from "@mui/icons-material/Man2";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import PublicIcon from "@mui/icons-material/Public";
 import CalculateIcon from "@mui/icons-material/Calculate";
-import { DashboardPage } from "./pages/dashboard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { DashboardPage } from "./pages/dashboard";
 import {
   PeopleList,
   PeopleShow,
   PeopleCreate,
   PeopleEdit,
 } from "./pages/people";
+
 import {
   PlanetsList,
   PlanetsShow,
@@ -42,11 +40,9 @@ import {
 import { CurrencyCalculator } from "./pages/currencyCalculator";
 import { FavoritesList } from "./pages/favorites";
 import { FilmsList, FilmsShow, FilmsCreate, FilmsEdit } from "./pages/films";
-
 import { ColorModeContextProvider } from "./contexts";
 import { SearchContextProvider } from "./contexts/SearchContextProvider";
 import { FavoritesContextProvider } from "./contexts/FavoritesContextProvider";
-
 import { Header, Title } from "./components";
 import "./styles/main.css";
 
@@ -58,29 +54,35 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
+  const inputGlobalStyles = (
+    <GlobalStyles
+      styles={{
+        html: {
+          WebkitFontSmoothing: "auto",
+        },
+        body: {
+          // overflowY: "scroll",
+          backgroundImage: "url('./images/background.png')",
+          backgroundRepeat: " repeat-y",
+          backgroundSize: "100% auto",
+          backgroundPosition: "fixed",
+          opacity: "0.95",
+        },
+      }}
+    />
+  );
+
   return (
     <BrowserRouter>
       <KBarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
-          <GlobalStyles
-            styles={{
-              html: { WebkitFontSmoothing: "auto" },
-              body: {
-                backgroundImage: "url('./images/background.png')",
-                backgroundPosition: "center",
-                backgrounfRepeat: "no-repeat",
-                backgroundSize: "cover",
-                opacity: "0.95",
-              },
-            }}
-          />
+          {inputGlobalStyles}
           <RefineSnackbarProvider>
             <DevtoolsProvider>
               <Refine
                 routerProvider={routerProvider}
                 dataProvider={dataProvider_SWAPI}
-                // dataProvider={dataProvider("https://api.finefoods.refine.dev")}
                 i18nProvider={i18nProvider}
                 options={{
                   syncWithLocation: true,
@@ -98,17 +100,6 @@ const App: React.FC = () => {
                     },
                   },
                   {
-                    name: "people",
-                    list: "/people",
-                    create: "/people/create",
-                    edit: "/people/edit/:id",
-                    show: "/people/show/:id",
-                    meta: {
-                      label: t("people.titles.list"),
-                      icon: <Man2Icon />,
-                    },
-                  },
-                  {
                     name: "favorites",
                     list: "/favorites",
                     // create: "/people/create",
@@ -120,14 +111,14 @@ const App: React.FC = () => {
                     },
                   },
                   {
-                    name: "films",
-                    list: "/films",
-                    create: "/films/create",
-                    edit: "/films/edit/:id",
-                    show: "/films/show/:id",
+                    name: "people",
+                    list: "/people",
+                    create: "/people/create",
+                    edit: "/people/edit/:id",
+                    show: "/people/show/:id",
                     meta: {
-                      label: t("films.titles.list"),
-                      icon: <VideocamIcon />,
+                      label: t("people.titles.list"),
+                      icon: <Man2Icon />,
                     },
                   },
                   {
@@ -141,6 +132,19 @@ const App: React.FC = () => {
                       icon: <PublicIcon />,
                     },
                   },
+
+                  {
+                    name: "films",
+                    list: "/films",
+                    create: "/films/create",
+                    edit: "/films/edit/:id",
+                    show: "/films/show/:id",
+                    meta: {
+                      label: t("films.titles.list"),
+                      icon: <VideocamIcon />,
+                    },
+                  },
+
                   {
                     name: "currencyCalculator",
                     list: "/currency-calculator",

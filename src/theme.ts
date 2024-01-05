@@ -7,6 +7,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 const LightTheme = createTheme({
   ...DefaultLightTheme,
+
   timeLine: {
     color: {
       pending: "#fff7e6",

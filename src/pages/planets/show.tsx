@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
+import { numberWithCommas } from "../../helpers";
 
 import Typography from "@mui/material/Typography";
 
@@ -130,7 +131,7 @@ export const PlanetsShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {planet?.population}
+                        {numberWithCommas(planet?.population as string)}
                       </Typography>
                     </Stack>
                     <Stack>
@@ -257,7 +258,7 @@ export const PlanetsShow: React.FC<IResourceComponentsProps> = () => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {planet?.diameter}
+                        {numberWithCommas(planet?.diameter as string)}
                       </Typography>
                     </Stack>
                     <Stack>

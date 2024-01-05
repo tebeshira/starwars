@@ -14,3 +14,7 @@ export const getItemResourceFromUrlProp = (url: string) => {
   const resource = paramsArr[4];
   return resource;
 };
+
+export const numberWithCommas = (x: string) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

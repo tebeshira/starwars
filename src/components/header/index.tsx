@@ -27,21 +27,9 @@ import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
 
 import i18n from "../../i18n";
-import { IPeople } from "../../interfaces";
 import { ColorModeContext } from "../../contexts";
 
-interface IOptions {
-  label: string;
-  url: string;
-  link: string;
-  category: string;
-}
-
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
-  const [value, setValue] = useState("");
-
-  const [people, setPeople] = useState<IPeople[]>([]);
-
   const { mode, setMode } = useContext(ColorModeContext);
 
   const changeLanguage = useSetLocale();
