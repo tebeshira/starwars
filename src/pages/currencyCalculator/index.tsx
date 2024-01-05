@@ -125,16 +125,17 @@ export const CurrencyCalculator: React.FC = () => {
                   <span style={{ fontWeight: "bold", marginRight: "5px" }}>
                     {currency} :{" "}
                   </span>
-                  <span style={{ fontWeight: "bold", color: "gray" }}>
+                  <span style={{ fontWeight: "bold", color: "lightgray" }}>
                     {rate.toFixed(2)}
                   </span>
                 </Typography>
               ))}
               <Typography sx={{ color: "#67be23" }}>
                 <span style={{ fontWeight: "bold", marginRight: "5px" }}>
-                  Exchange rate (buy/sell):{" "}
+                  Exchange rate{" "}
+                  <span style={{ color: "lightgray" }}>(buy/sell)</span> :{" "}
                 </span>
-                <span style={{ fontWeight: "bold", color: "gray" }}>
+                <span style={{ fontWeight: "bold", color: "lightgray" }}>
                   {exchangeRates[selectedCurrencyToBuy] /
                   exchangeRates[selectedCurrencyToSell]
                     ? (
@@ -199,7 +200,7 @@ export const CurrencyCalculator: React.FC = () => {
           <Grid>
             {ammountToBuy && selectedCurrencyToBuy && selectedCurrencyToSell ? (
               selectedCurrencyToBuy !== selectedCurrencyToSell ? (
-                <Typography color="gray" sx={{ marginTop: "5px" }}>
+                <Typography color="lightgray" sx={{ marginTop: "5px" }}>
                   {`It will cost ${(
                     (ammountToBuy as number) *
                     (exchangeRates[selectedCurrencyToBuy] /
