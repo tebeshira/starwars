@@ -170,7 +170,7 @@ export const CurrencyCalculator: React.FC = () => {
 
           <Grid item xs={12} md={5} lg={4}>
             <TextField
-              label="Ammount to buy (between 0 and 50)"
+              label="Ammount to buy (between 1 and 1000)"
               sx={{ width: "100%", marginBottom: "25px" }}
               type="number"
               inputProps={{ min, max }}

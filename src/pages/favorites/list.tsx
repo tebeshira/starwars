@@ -7,8 +7,6 @@ import {
 } from "@refinedev/core";
 import { List, DeleteButton } from "@refinedev/mui";
 
-import { getItemIdFromUrlProp } from "../../helpers";
-
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
@@ -21,6 +19,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { OptionsMenu } from "../../components/OptionsMenu.tsx";
 import { FavoritesContext } from "../../contexts/FavoritesContextProvider";
+import { getItemIdFromUrlProp, numberWithCommas } from "../../helpers";
 
 export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
@@ -155,7 +154,7 @@ export const FavoritesList: React.FC<IResourceComponentsProps> = () => {
         align="right"
         onClick={() => show("planets", getItemIdFromUrlProp(row.url))}
       >
-        {row.population}
+        {numberWithCommas(row.population)}
       </TableCell>
       <TableCell
         align="right"

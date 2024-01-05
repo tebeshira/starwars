@@ -60,14 +60,6 @@ const App: React.FC = () => {
         html: {
           WebkitFontSmoothing: "auto",
         },
-        body: {
-          // overflowY: "scroll",
-          backgroundImage: "url('./images/background.png')",
-          backgroundRepeat: " repeat-y",
-          backgroundSize: "100% auto",
-          backgroundPosition: "fixed",
-          opacity: "0.95",
-        },
       }}
     />
   );
