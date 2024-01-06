@@ -1,7 +1,5 @@
 # starwars
 
-# starwars
-
 ## Overview
 
 Welcome to the Star Wars Universe Explorer! This React-based front-end application utilizes the refine.dev framework and Material UI to interact with the Star Wars API (swapi.dev). The application allows users to explore various entities from the Star Wars universe, supports detailed views of each entity, enables searching and linking between entities, and includes a favorites feature with persistence. Additionally, it features a dynamic Galactic Trade Calculator that simulates supply and demand for fictional Star Wars currencies.
@@ -13,9 +11,6 @@ NodeJS 18.18.0,
 npm 9.8.1,
 
 ### Project Setup
-
-- Initialize a new React project using the refine.dev framework.
-- Use Material UI for styling and UI components.
 
 - git clone https://github.com/tebeshira/starwars.git
 - npm install
