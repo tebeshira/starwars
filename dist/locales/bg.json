@@ -1,0 +1,187 @@
+{
+  "people": {
+    "fields": {
+      "name": "Име",
+      "gender": "Пол",
+      "height": "Височина (см)",
+      "mass": "Тегло (кг)",
+      "hair_color": "Коса (цвят)",
+      "skin_color": "Кожа (цвят)",
+      "homeworld": "Планета",
+      "eye_color": "Очи (цвят)",
+      "birth_year": "Година на раждане",
+      "films": "Филми",
+      "species": "Видове",
+      "vehicles": "Превозни средства",
+      "starships": "Космически Кораби",
+      "favorites": "Любими",
+      "options": "Опции",
+      "images": {
+        "label": "Снимки",
+        "description": "Снимка",
+        "validation": "трябва да е размер 480x480 px"
+      }
+    },
+    "titles": {
+      "list": "Хора",
+      "create": "Създай човек",
+      "edit": "Редактирай човек"
+    }
+  },
+
+  "films": {
+    "fields": {
+      "title": "Заглавие",
+      "episode_id": "ID на епизод",
+      "opening_crawl": "Описание",
+      "director": "Директор",
+      "producer": "Продуцент",
+      "characters": "Герои",
+      "release_date": "Дата на излизане",
+      "planets": "Планети",
+      "species": "Видове",
+      "vehicles": "Превозни средства",
+      "starships": "Космически Кораби",
+      "favorites": "Любими",
+      "options": "Options",
+      "images": {
+        "label": "Снимки",
+        "description": "Снимка на филма",
+        "validation": "трябва да бъде размер 480x480 px"
+      }
+    },
+    "titles": {
+      "list": "Филми",
+      "create": "Създай Филм",
+      "edit": "Редактирай филм"
+    }
+  },
+  "planets": {
+    "fields": {
+      "name": "Име",
+      "rotation_period": "Период на ротация",
+      "orbital_period": "Орбитален период",
+      "diameter": "Диаметър",
+      "climate": "Климат",
+      "gravity": "Гравитация",
+      "terrain": "Терен",
+      "surface_water": "Вода на повърхността",
+      "population": "Население",
+      "films": "Филми",
+      "residents": "Жители",
+      "favorites": "Любими",
+      "options": "Опции",
+      "images": {
+        "label": "Images",
+        "description": "Снимка на планетата",
+        "validation": "трябва да бъде размер 480x480 px"
+      }
+    },
+    "titles": {
+      "list": "Планети",
+      "create": "Създай Планета",
+      "edit": "Редактирай Планета"
+    }
+  },
+
+  "favorites": {
+    "fields": {
+      "options": "Опции"
+    },
+    "titles": {
+      "list": "Любими"
+    },
+    "remove": "Изтрий всичко"
+  },
+
+  "dashboard": {
+    "title": "Табло"
+  },
+
+  "calculator": {
+    "title": "Калкулатор"
+  },
+
+  "options": {
+    "show": "Преглед",
+    "edit": "Редактирай",
+    "create": "Създай",
+    "delete": "Изтрий",
+    "addFavorites": "Добави в любими"
+  },
+  "errors": {
+    "required": {
+      "field": "'{{ field }}' е задължително",
+      "common": "Полето е задължително",
+      "min": "Полето трябва да съдържа най-малко {{ min }} символа",
+      "max": "Полето трябва да съдържа най-много {{ max }} символа",
+      "invalidMail": "Полето трябва да е валиден имейл адресс"
+    }
+  },
+
+  "pages": {
+    "error": {
+      "info": "Може би сте забравили да добавите кмпонентът {{action}} към ресурс {{resource}}.",
+      "404": "Съжаляваме, страницата която искате да посетите не същестеува",
+      "resource404": "Сигурни ли сте, че сте създали ресурс {{resource}}",
+      "backHome": "Назад"
+    }
+  },
+  "actions": {
+    "list": "Лист",
+    "create": "Създай",
+    "edit": "Редактирай",
+    "show": "Преглед"
+  },
+  "buttons": {
+    "add": "Добави",
+    "create": "Създай",
+    "save": "Запази",
+    "logout": "Разлогване",
+    "delete": "Изтрий",
+    "edit": "Редактирай",
+    "cancel": "Излез",
+    "confirm": "Сигурни ли сте?",
+    "filter": "Филтър",
+    "clear": "Изчисти",
+    "refresh": "Обнови",
+    "show": "Преглед",
+    "undo": "Върни промените",
+    "import": "Import",
+    "export": "Export",
+    "clone": "Clone",
+    "accept": "Accept",
+    "acceptAll": "Accept All",
+    "reject": "Reject",
+    "rejectAll": "Reject All",
+    "nextStep": "Next",
+    "previousStep": "Previous"
+  },
+  "loading": "Зареждане",
+  "tags": {
+    "clone": "Clone"
+  },
+  "table": {
+    "actions": "Действия"
+  },
+  "search": {
+    "placeholder": "Търсене..."
+  },
+  "status": {
+    "enable": "Позволен",
+    "disable": "Непозволен"
+  },
+  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
+  "notifications": {
+    "success": "Заявката премина успешно!",
+    "error": "Грешка (status code: {{statusCode}})",
+    "undoable": "Имате {{seconds}} секунди да върнете промените",
+    "createSuccess": "Успешно създадохте {{resource}}",
+    "createError": "Възникна грешка {{resource}} (status code: {{statusCode}})",
+    "deleteSuccess": "Изтрихте успешно {{resource}}",
+    "deleteError": "Възникна грешка при изтриване на {{resource}} (status code: {{statusCode}})",
+    "editSuccess": "Редактирахте успешно {{resource}}",
+    "editError": "Възникна грешка при редактиране на {{resource}} (status code: {{statusCode}})",
+    "importProgress": "Importing: {{processed}}/{{total}}"
+  }
+}
