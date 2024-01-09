@@ -18,7 +18,7 @@ type Action = {
   type: string;
   payload?: {
     resource: string;
-    item: any;
+    item: { url: string };
   };
 };
 

@@ -20,7 +20,7 @@ const ITEM_HEIGHT = 48;
 type Props = {
   resourceOfItem: string;
   id: number;
-  item: any;
+  item: { url: string };
 };
 
 export function OptionsMenu({ resourceOfItem, id, item }: Props) {
